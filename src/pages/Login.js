@@ -40,7 +40,7 @@ const Login = () => {
 };
 
 let Title = styled.div`
-  margin-top: 20vh;
+  margin-top: 6.5vh;
   width: 134px;
   height: 36px;
 
