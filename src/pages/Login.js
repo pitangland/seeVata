@@ -8,6 +8,8 @@ import kakaoLogin from "../assets/img/kakaoLogin.png";
 import naverLogin from "../assets/img/naverLogin.png";
 import googleLogin from "../assets/img/googleLogin.png";
 import logo from "../assets/img/logo.png";
+import { authService } from "../service/fBase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
   // naver
@@ -19,6 +21,11 @@ const Login = () => {
   };
 
   // google
+  const handleGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    const data = await signInWithPopup(authService, provider);
+    console.log(data);
+  };
 
   return (
     <>
@@ -33,7 +40,11 @@ const Login = () => {
           src={kakaoLogin}
           alt="kakaoLogin"
         />
-        <GoogleLoginImg src={googleLogin} alt="googleLogin" />
+        <GoogleLoginImg
+          onClick={handleGoogle}
+          src={googleLogin}
+          alt="googleLogin"
+        />
       </LoginBtn>
     </>
   );
