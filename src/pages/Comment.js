@@ -202,7 +202,7 @@ let animation = keyframes`
 let AvataImg = styled.img`
   ${Face}: hover {
   }
-  animation: ${animation} 1s forwards;
+  // animation: ${animation} 1s forwards;
 `;
 
 export default Make;

@@ -1,5 +1,4 @@
 import AppLayout from "./components/layout/AppLayout";
-import Login from "./pages/Login";
 
 import Router from "./shared/Router";
 

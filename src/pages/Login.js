@@ -3,49 +3,13 @@ import styled from "styled-components";
 
 import "../shared/theme.css";
 
-// import { ReactComponent as KakaoLogin } from "../assets/img/kakaoLogin.svg";
-import kakaoLogin from "../assets/img/kakaoLogin.png";
-import naverLogin from "../assets/img/naverLogin.png";
-import googleLogin from "../assets/img/googleLogin.png";
-import logo from "../assets/img/logo.png";
-import { authService } from "../service/fBase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
 const Login = () => {
-  // naver
-
-  // kakao
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email`;
-  const handleLogin = () => {
-    window.location.href = KAKAO_AUTH_URL;
-  };
-
-  // google
-  const handleGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    const data = await signInWithPopup(authService, provider);
-    console.log(data);
-  };
-
   return (
     <>
       <Title>seeVata</Title>
-      <TitleDes>너가 본 나의 이미지를 알려줘</TitleDes>
-      <LogoImg src={logo} alt="임시로고" />
-      <LoginDes>SNS계정으로 계속하기</LoginDes>
-      <LoginBtn>
-        <NaverLoginImg src={naverLogin} alt="naverLogin" />
-        <KakaoLoginImg
-          onClick={handleLogin}
-          src={kakaoLogin}
-          alt="kakaoLogin"
-        />
-        <GoogleLoginImg
-          onClick={handleGoogle}
-          src={googleLogin}
-          alt="googleLogin"
-        />
-      </LoginBtn>
+      <TitleDes>내 seeVata 이름을 만들어주세요</TitleDes>
+      <LoginDes>닉네임</LoginDes>
+      <LoginBtn></LoginBtn>
     </>
   );
 };
@@ -84,9 +48,5 @@ let LoginBtn = styled.div`
     cursor: pointer;
   }
 `;
-
-let NaverLoginImg = styled.img``;
-let KakaoLoginImg = styled.img``;
-let GoogleLoginImg = styled.img``;
 
 export default Login;
