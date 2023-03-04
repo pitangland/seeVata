@@ -2,22 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import HairCom from "./hair";
-import BagCom from "./bag";
 import NeckCom from "./neck";
 import EarCom from "./ear";
 
 const Accessory = () => {
   const [isHair, setIsHair] = useState(false);
-  const [isBag, setIsBag] = useState(false);
   const [isNeck, setIsNeck] = useState(false);
   const [isEar, setIsEar] = useState(false);
 
   const hairModal = () => {
     setIsHair(!isHair);
-  };
-
-  const bagModal = () => {
-    setIsBag(!isBag);
   };
 
   const neckModal = () => {
@@ -32,13 +26,11 @@ const Accessory = () => {
     <>
       <Category>
         <Hair onClick={hairModal}>머리</Hair>
-        <Bag onClick={bagModal}>가방</Bag>
         <Neck onClick={neckModal}>목걸이</Neck>
         <Ear onClick={earModal}>귀걸이</Ear>
       </Category>
       <Closet>
         {isHair ? <HairCom setIsHair={setIsHair} /> : null}
-        {isBag ? <BagCom setIsBag={setIsBag} /> : null}
         {isNeck ? <NeckCom setIsNeck={setIsNeck} /> : null}
         {isEar ? <EarCom setIsEar={setIsEar} /> : null}
       </Closet>
@@ -70,7 +62,6 @@ let Category = styled.div`
   color: #272a33;
 `;
 let Hair = styled.div``;
-let Bag = styled.div``;
 let Neck = styled.div``;
 let Ear = styled.div``;
 

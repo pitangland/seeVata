@@ -4,13 +4,11 @@ import styled from "styled-components";
 import TopCom from "./top";
 import BottomCom from "./bottom";
 import OnepieceCom from "./onepiece";
-import ShoesCom from "./shoes";
 
 const Cloth = () => {
   const [isTop, setIsTop] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
   const [isOnepiece, setIsOnepiece] = useState(false);
-  const [isShoes, setIsShoes] = useState(false);
 
   const topModal = () => {
     setIsTop(!isTop);
@@ -24,24 +22,18 @@ const Cloth = () => {
     setIsOnepiece(!isOnepiece);
   };
 
-  const shoesModal = () => {
-    setIsShoes(!isShoes);
-  };
-
   return (
     <>
       <Category>
         <Top onClick={topModal}>상의</Top>
         <Bottom onClick={bottomModal}>하의</Bottom>
         <Onepiece onClick={onepieceModal}>원피스</Onepiece>
-        <Shoes onClick={shoesModal}>신발(보류)</Shoes>
       </Category>
 
       <Closet>
         {isTop ? <TopCom setIsTop={setIsTop} /> : null}
         {isBottom ? <BottomCom setIsBottom={setIsBottom} /> : null}
         {isOnepiece ? <OnepieceCom setIsOnepiece={setIsOnepiece} /> : null}
-        {isShoes ? <ShoesCom setIsShoes={setIsShoes} /> : null}
       </Closet>
     </>
   );
@@ -74,7 +66,6 @@ let Category = styled.div`
 let Top = styled.div``;
 let Bottom = styled.div``;
 let Onepiece = styled.div``;
-let Shoes = styled.div``;
 
 let Closet = styled.div``;
 

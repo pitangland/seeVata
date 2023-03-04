@@ -5,16 +5,12 @@ import ColorCom from "./color";
 import EyeCom from "./eye";
 import MouthCom from "./mouth";
 import CheekCom from "./cheek";
-import PatternCom from "./pattern";
-import MustacheCom from "./mustache";
 
 const Face = () => {
   const [isColor, setIsColor] = useState(false);
   const [isEye, setIsEye] = useState(false);
   const [isMouth, setIsMouth] = useState(false);
   const [isCheek, setIsCheek] = useState(false);
-  const [isPattern, setIsPattern] = useState(false);
-  const [isMustache, setIsMustache] = useState(false);
 
   const colorModal = () => {
     setIsColor(!isColor);
@@ -32,14 +28,6 @@ const Face = () => {
     setIsCheek(!isCheek);
   };
 
-  const patternModal = () => {
-    setIsPattern(!isPattern);
-  };
-
-  const mustacheModal = () => {
-    setIsMustache(!isMustache);
-  };
-
   return (
     <>
       <Category>
@@ -47,8 +35,6 @@ const Face = () => {
         <Eye onClick={eyeModal}>눈</Eye>
         <Mouth onClick={mouthModal}>코입</Mouth>
         <Cheek onClick={cheekModal}>볼</Cheek>
-        <Pattern onClick={patternModal}>무늬</Pattern>
-        <Mustache onClick={mustacheModal}>수염</Mustache>
       </Category>
 
       <Closet>
@@ -56,8 +42,6 @@ const Face = () => {
         {isEye ? <EyeCom setIsEye={setIsEye} /> : null}
         {isMouth ? <MouthCom setIsMouth={setIsMouth} /> : null}
         {isCheek ? <CheekCom setIsCheek={setIsCheek} /> : null}
-        {isPattern ? <PatternCom setIsPattern={setIsPattern} /> : null}
-        {isMustache ? <MustacheCom setIsMustache={setIsMustache} /> : null}
       </Closet>
     </>
   );
@@ -90,8 +74,6 @@ let Color = styled.div``;
 let Eye = styled.div``;
 let Mouth = styled.div``;
 let Cheek = styled.div``;
-let Pattern = styled.div``;
-let Mustache = styled.div``;
 
 let Closet = styled.div``;
 
