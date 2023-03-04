@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import "../shared/theme.css";
 
@@ -9,11 +10,15 @@ import { authService } from "../service/fBase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   // google
   const handleGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const data = await signInWithPopup(authService, provider);
-    console.log(data);
+    // console.log(data.user.uid);
+    // console.log(data.user.displayName);
+    navigate("/Login");
   };
 
   return (
