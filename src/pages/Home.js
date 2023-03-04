@@ -18,6 +18,7 @@ const Home = () => {
     const data = await signInWithPopup(authService, provider);
     // console.log(data.user.uid);
     // console.log(data.user.displayName);
+
     navigate("/Login");
   };
 

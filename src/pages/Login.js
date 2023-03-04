@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -6,17 +6,45 @@ import "../shared/theme.css";
 
 import { AiOutlineLeft } from "react-icons/ai";
 
+import { dbService, storageService } from "../service/fBase";
+import {
+  addDoc,
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+} from "@firebase/firestore";
+
 // import { ReactComponent as NextButton } from "../assets/img/nextButton.png";
 import nextButton from "../assets/img/nextButton.png";
+import { authService } from "../service/fBase";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const naviHome = () => {
     navigate("/");
   };
+  const [nickName, setNickName] = useState("");
 
-  const naviWel = () => {
+  const onChange = (e) => {
+    const {
+      target: { value },
+    } = e;
+    setNickName(value);
+  };
+
+  // 닉네임 저장하는 것까지 성공 만약에 그 uid로 있으면 패스할 수 있게끔 해야함
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const userObj = {
+      nickName: nickName,
+    };
+
+    await addDoc(collection(dbService, authService.currentUser.uid), {
+      userObj,
+    });
+    setNickName("");
     navigate("/Wel");
   };
 
@@ -33,15 +61,14 @@ const Login = () => {
       <Nick>
         <LoginDes>닉네임</LoginDes>
         <LoginInput
+          onChange={onChange}
           placeholder="닉네임을 입력해주세요!"
           col="25"
           row="1"
           maxLength={10}
-        >
-          닉네임을 입력해주세요!
-        </LoginInput>
+        ></LoginInput>
       </Nick>
-      <NextButton src={nextButton} alt={nextButton} onClick={naviWel} />
+      <NextButton src={nextButton} alt={nextButton} onClick={onSubmit} />
     </>
   );
 };

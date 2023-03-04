@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import "../shared/theme.css";
 
@@ -21,6 +22,12 @@ import { AiOutlineLeft } from "react-icons/ai";
 // import { ref, uploadString, getDownloadURL } from "@firebase/storage";
 
 const Make = () => {
+  const navigate = useNavigate();
+
+  const naviDone = () => {
+    navigate("/Done");
+  };
+
   const [isFace, setIsFace] = useState(false);
   const [isCloth, setIsCloth] = useState(false);
   const [isAccessory, setIsAccessory] = useState(false);
@@ -52,7 +59,7 @@ const Make = () => {
       <Top>
         <AiOutlineLeft />
         <Title>000님의 seeVata</Title>
-        <Success>완성</Success>
+        <Success onClick={naviDone}>완성</Success>
       </Top>
       <AvataImg src={avata} alt="avata"></AvataImg>
 

@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Wel from "../pages/Welcome";
 import Make from "../pages/Make";
+import Done from "../pages/Done";
 import Manager from "../pages/Manager";
 
 export default function Router({ authService }) {
@@ -15,6 +16,7 @@ export default function Router({ authService }) {
         <Route path="/Login" element={<Login />} authService={authService} />
         <Route path="/Wel" element={<Wel />} authService={authService} />
         <Route path="/Make" element={<Make />} authService={authService} />
+        <Route path="/Done" element={<Done />} authService={authService} />
         <Route
           path="/Manager"
           element={<Manager />}
