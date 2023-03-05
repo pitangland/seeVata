@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import TopCom from "./top";
 import BottomCom from "./bottom";
 import OnepieceCom from "./onepiece";
+
+import { dbService } from "../../../../service/fBase";
+import { collection, query, getDocs } from "firebase/firestore";
 
 const Cloth = () => {
   const [isTop, setIsTop] = useState(false);
@@ -12,15 +15,35 @@ const Cloth = () => {
 
   const topModal = () => {
     setIsTop(!isTop);
+    setIsBottom(false);
+    setIsOnepiece(false);
   };
 
   const bottomModal = () => {
     setIsBottom(!isBottom);
+    setIsTop(false);
+    setIsOnepiece(false);
   };
 
   const onepieceModal = () => {
     setIsOnepiece(!isOnepiece);
+    setIsTop(false);
+    setIsBottom(false);
   };
+
+  const getNickName = async () => {
+    const q = query(collection(dbService, "cloth"));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data().top);
+      // setNickName(doc.data().userObj.nickName);
+    });
+  };
+
+  useEffect(() => {
+    getNickName();
+  }, []);
 
   return (
     <>

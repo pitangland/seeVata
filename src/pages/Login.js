@@ -6,17 +6,10 @@ import "../shared/theme.css";
 
 import { AiOutlineLeft } from "react-icons/ai";
 
-import { dbService, storageService } from "../service/fBase";
-import {
-  addDoc,
-  collection,
-  query,
-  onSnapshot,
-  orderBy,
-} from "@firebase/firestore";
+import { dbService } from "../service/fBase";
+import { doc, setDoc } from "@firebase/firestore";
 
 // import { ReactComponent as NextButton } from "../assets/img/nextButton.png";
-import nextButton from "../assets/img/nextButton.png";
 import { authService } from "../service/fBase";
 
 const Login = () => {
@@ -38,13 +31,15 @@ const Login = () => {
     e.preventDefault();
 
     const userObj = {
+      id: authService.currentUser.uid,
       nickName: nickName,
     };
 
-    await addDoc(collection(dbService, authService.currentUser.uid), {
+    await setDoc(doc(dbService, "users", authService.currentUser.uid), {
       userObj,
     });
     setNickName("");
+
     navigate("/Wel");
   };
 
@@ -68,7 +63,7 @@ const Login = () => {
           maxLength={10}
         ></LoginInput>
       </Nick>
-      <NextButton src={nextButton} alt={nextButton} onClick={onSubmit} />
+      <NextButton onClick={onSubmit}>다음</NextButton>
     </>
   );
 };
@@ -161,7 +156,31 @@ let LoginInput = styled.textarea`
   color: #b7b7b7;
 `;
 
-let NextButton = styled.img`
+let NextButton = styled.div`
+  margin-top: 1vh;
+  width: 342.95px;
+  height: 56px;
+  left: 24px;
+  top: 681px;
+
+  background: #272a33;
+  border-radius: 6px;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 135%;
+  /* or 20px */
+
+  text-align: center;
+
+  color: #ff6953;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &:hover {
     cursor: pointer;
   }

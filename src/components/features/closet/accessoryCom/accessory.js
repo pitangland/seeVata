@@ -12,14 +12,20 @@ const Accessory = () => {
 
   const hairModal = () => {
     setIsHair(!isHair);
+    setIsNeck(false);
+    setIsEar(false);
   };
 
   const neckModal = () => {
     setIsNeck(!isNeck);
+    setIsHair(false);
+    setIsEar(false);
   };
 
   const earModal = () => {
     setIsEar(!isEar);
+    setIsHair(false);
+    setIsNeck(false);
   };
 
   return (

@@ -14,18 +14,30 @@ const Face = () => {
 
   const colorModal = () => {
     setIsColor(!isColor);
+    setIsEye(false);
+    setIsMouth(false);
+    setIsCheek(false);
   };
 
   const eyeModal = () => {
     setIsEye(!isEye);
+    setIsColor(false);
+    setIsMouth(false);
+    setIsCheek(false);
   };
 
   const mouthModal = () => {
     setIsMouth(!isMouth);
+    setIsColor(false);
+    setIsEye(false);
+    setIsCheek(false);
   };
 
   const cheekModal = () => {
     setIsCheek(!isCheek);
+    setIsColor(false);
+    setIsEye(false);
+    setIsMouth(false);
   };
 
   return (
@@ -70,6 +82,7 @@ let Category = styled.div`
 
   color: #272a33;
 `;
+
 let Color = styled.div``;
 let Eye = styled.div``;
 let Mouth = styled.div``;

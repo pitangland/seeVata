@@ -33,18 +33,21 @@ const Make = () => {
   const [isAccessory, setIsAccessory] = useState(false);
 
   const faceModal = () => {
-    console.log("faceClick");
     setIsFace(!isFace);
+    setIsCloth(false);
+    setIsAccessory(false);
   };
 
   const clothModal = () => {
-    console.log("clothClick");
     setIsCloth(!isCloth);
+    setIsFace(false);
+    setIsAccessory(false);
   };
 
   const accessoryModal = () => {
-    console.log("accessoryClick");
     setIsAccessory(!isAccessory);
+    setIsFace(false);
+    setIsCloth(false);
   };
 
   // useEffect(() => {
@@ -61,7 +64,11 @@ const Make = () => {
         <Title>000님의 seeVata</Title>
         <Success onClick={naviDone}>완성</Success>
       </Top>
-      <AvataImg src={avata} alt="avata"></AvataImg>
+      {isFace ? (
+        <AvataImg src={avata} alt="avata" className="aniBig" />
+      ) : (
+        <AvataImg src={avata} alt="avata" />
+      )}
 
       <Category>
         <Face onClick={faceModal}>얼굴</Face>
@@ -77,6 +84,30 @@ const Make = () => {
     </>
   );
 };
+
+let animationBig = keyframes`
+0% {
+  transform: scale(1,1);
+}
+50%{
+  transform: scale(1.25,1.25) translate(0, 20px);
+}
+100%{
+  transform: scale(1.8,1.8) translate(0, 50px);
+}
+`;
+
+let animationSmall = keyframes`
+0% {
+  transform: scale(1,1);
+}
+50%{
+  transform: scale(1.25,1.25) translate(0, 20px);
+}
+100%{
+  transform: scale(1.8,1.8) translate(0, 50px);
+}
+`;
 
 let Top = styled.div`
   display: flex;
@@ -193,23 +224,10 @@ let Closet = styled.div`
   z-index: 40;
 `;
 
-let animation = keyframes`
-0% {
-  transform: scale(1,1);
-}
-50%{
-  transform: scale(1.25,1.25) translate(0, 20px);
-}
-100%{
-  transform: scale(1.8,1.8) translate(0, 50px);
-}
-
-`;
-
 let AvataImg = styled.img`
-  ${Face}: hover {
+  &.aniBig {
+    animation: ${animationBig} 1s forwards;
   }
-  animation: ${animation} 1s forwards;
 `;
 
 export default Make;

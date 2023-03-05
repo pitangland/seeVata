@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import QueRabbit from "../assets/img/QueRabbit.png";
-import startBtn from "../assets/img/StartButton.png";
+
+import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
 
 import "../shared/theme.css";
 
@@ -19,6 +20,10 @@ const Welcome = () => {
 
   return (
     <>
+      <Top>
+        <AiOutlineLeft />
+        <AiOutlineClose />
+      </Top>
       <Wel>
         000님의
         <Title> seeVata</Title>가 <br />
@@ -27,11 +32,47 @@ const Welcome = () => {
       <Que src={QueRabbit} alt="rabbit" />
       <Next>
         <Des>시바타는 언제든지 수정 할 수 있어요!</Des>
-        <StartBtn src={startBtn} alt="start" onClick={naviMake} />
+        <See>000님의 방보기</See>
       </Next>
     </>
   );
 };
+
+let See = styled.div`
+  margin-top: 1vh;
+  width: 342.95px;
+  height: 56px;
+  left: 24px;
+  top: 681px;
+
+  background: #272a33;
+  border-radius: 6px;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+let Top = styled.div`
+  width: 300px;
+  margin: 6.5vh 6.5vh 1vh 6.5vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+`;
 
 let Wel = styled.div`
   margin-top: 22vh;
@@ -90,14 +131,6 @@ let Des = styled.div`
   text-align: center;
 
   color: rgba(0, 0, 0, 0.6);
-`;
-
-let StartBtn = styled.img`
-  margin-top: 1vh;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 export default Welcome;

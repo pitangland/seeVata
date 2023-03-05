@@ -1,30 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import QueRabbit from "../assets/img/QueRabbit.png";
-import startBtn from "../assets/img/StartButton.png";
 
 import "../shared/theme.css";
 
+import { authService, dbService } from "../service/fBase";
+import { collection, query, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
 const Welcome = () => {
+  const [id, setId] = useState("");
+  const [nickName, setNickName] = useState("");
+
   const navigate = useNavigate();
 
   const naviMake = () => {
     navigate("/Make");
   };
 
+  onAuthStateChanged(authService, async (user) => {
+    // Do something with user
+    // console.log(user.uid);
+    setId(user.uid);
+  });
+
+  const getNickName = async () => {
+    const q = query(collection(dbService, "users", id));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id, " => ", doc.data().userObj.nickName);
+      setNickName(doc.data().userObj.nickName);
+    });
+  };
+
+  useEffect(() => {
+    getNickName();
+  }, []);
+
   return (
     <>
       <Wel>
-        안녕하세요. 000님
+        안녕하세요. {nickName}님
         <br />
         <Title>seeVata</Title>에 오신걸 환영합니다.
       </Wel>
       <Que src={QueRabbit} alt="rabbit" />
       <Next>
         <Des>시바타는 언제든지 수정 할 수 있어요!</Des>
-        <StartBtn src={startBtn} alt="start" onClick={naviMake} />
+        <StartBtn onClick={naviMake}>
+          내 <LittleTitle>&nbsp;seeVata&nbsp;</LittleTitle> 꾸미러 가기
+        </StartBtn>
       </Next>
     </>
   );
@@ -89,12 +117,37 @@ let Des = styled.div`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-let StartBtn = styled.img`
+let StartBtn = styled.div`
   margin-top: 1vh;
+
+  width: 342.95px;
+  height: 56px;
+  left: 24px;
+  top: 681px;
+
+  background: #000000;
+  border-radius: 6px;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     cursor: pointer;
   }
+`;
+
+let LittleTitle = styled.div`
+  color: #ff6953;
 `;
 
 export default Welcome;
