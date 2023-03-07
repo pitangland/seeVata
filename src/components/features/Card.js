@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { useNavigate } from "react-router-dom";
-
-const Card = ({ img, id }) => {
+const Card = ({ img, id, getKey }) => {
   const onClick = (key) => {
-    console.log(key.target.id);
+    getKey(key.target.id);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>
