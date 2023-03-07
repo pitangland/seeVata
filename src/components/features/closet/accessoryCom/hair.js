@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Card from "../../Card";
 
-const hair = ({ hair }) => {
+const hair = ({ hair, getKey }) => {
   return (
     <>
       <Category>
         {Object.entries(hair).map(([id, value]) => (
-          <Card img={value} id={id} />
+          <Card img={value} id={id} getKey={getKey} />
         ))}
       </Category>
     </>

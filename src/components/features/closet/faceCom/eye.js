@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Card from "../../Card";
 
-const eye = ({ eye }) => {
+const Eye = ({ eye, getKey }) => {
   return (
     <>
       <Category>
         {Object.entries(eye).map(([id, value]) => (
-          <Card img={value} id={id} />
+          <Card img={value} id={id} getKey={getKey} />
         ))}
       </Category>
     </>
@@ -36,4 +36,4 @@ let Category = styled.div`
   color: #272a33;
 `;
 
-export default eye;
+export default Eye;

@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Card from "../../Card";
 
-const mouth = ({ mouth }) => {
+const mouth = ({ mouth, getKey }) => {
   return (
     <>
       <Category>
         {Object.entries(mouth).map(([id, value]) => (
-          <Card img={value} id={id} />
+          <Card img={value} id={id} getKey={getKey} />
         ))}
       </Category>
     </>

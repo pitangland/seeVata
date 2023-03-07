@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Card from "../../Card";
 
-const cheek = ({ cheek }) => {
+const cheek = ({ cheek, getKey }) => {
   return (
     <>
       <Category>
         {Object.entries(cheek).map(([id, value]) => (
-          <Card img={value} id={id} />
+          <Card img={value} id={id} getKey={getKey} />
         ))}
       </Category>
     </>

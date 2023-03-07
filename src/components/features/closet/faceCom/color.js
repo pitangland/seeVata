@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Card from "../../Card";
 
-const color = ({ color }) => {
+const color = ({ color, getKey }) => {
   return (
     <>
       <Category>
         {Object.entries(color).map(([id, value]) => (
-          <Card img={value} id={id} />
+          <Card img={value} id={id} getKey={getKey} />
         ))}
       </Category>
     </>
