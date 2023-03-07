@@ -19,8 +19,6 @@ const Card = ({ img, id, getKey }) => {
 
 export default Card;
 
-let Img = styled.div``;
-
 let ImgCard = styled.img`
   width: 100px;
   height: 100px;
