@@ -5,19 +5,19 @@ import HairCom from "./hair";
 import NeckCom from "./neck";
 import EarCom from "./ear";
 
-const Accessory = ({ accessory }) => {
+const Accessory = ({ accessory, getKey }) => {
   // console.log(accessory);
 
   const hairArr = {
-    ...accessory.Rhair,
+    ...accessory.hair,
   };
 
   const neckArr = {
-    ...accessory.Rneck,
+    ...accessory.neck,
   };
 
   const earArr = {
-    ...accessory.Rear,
+    ...accessory.ear,
   };
 
   const [isHair, setIsHair] = useState(false);
@@ -52,9 +52,15 @@ const Accessory = ({ accessory }) => {
         <Ear onClick={earModal}>귀걸이</Ear>
       </Category>
       <Closet>
-        {isHair ? <HairCom setIsHair={setIsHair} hair={hairArr} /> : null}
-        {isNeck ? <NeckCom setIsNeck={setIsNeck} neck={neckArr} /> : null}
-        {isEar ? <EarCom setIsEar={setIsEar} ear={earArr} /> : null}
+        {isHair ? (
+          <HairCom setIsHair={setIsHair} hair={hairArr} getKey={getKey} />
+        ) : null}
+        {isNeck ? (
+          <NeckCom setIsNeck={setIsNeck} neck={neckArr} getKey={getKey} />
+        ) : null}
+        {isEar ? (
+          <EarCom setIsEar={setIsEar} ear={earArr} getKey={getKey} />
+        ) : null}
       </Closet>
     </>
   );

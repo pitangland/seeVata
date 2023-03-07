@@ -6,21 +6,21 @@ import EyeCom from "./eye";
 import MouthCom from "./mouth";
 import CheekCom from "./cheek";
 
-const Face = ({ face }) => {
+const Face = ({ face, getKey }) => {
   const colorArr = {
-    ...face.Rcolor,
+    ...face.color,
   };
 
   const eyeArr = {
-    ...face.Reye,
+    ...face.eye,
   };
 
   const mouthArr = {
-    ...face.Rmouth,
+    ...face.mouth,
   };
 
   const cheekArr = {
-    ...face.Rcheek,
+    ...face.cheek,
   };
 
   const [isColor, setIsColor] = useState(false);
@@ -66,10 +66,18 @@ const Face = ({ face }) => {
       </Category>
 
       <Closet>
-        {isColor ? <ColorCom setIsColor={setIsColor} color={colorArr} /> : null}
-        {isEye ? <EyeCom setIsEye={setIsEye} eye={eyeArr} /> : null}
-        {isMouth ? <MouthCom setIsMouth={setIsMouth} mouth={mouthArr} /> : null}
-        {isCheek ? <CheekCom setIsCheek={setIsCheek} cheek={cheekArr} /> : null}
+        {isColor ? (
+          <ColorCom setIsColor={setIsColor} color={colorArr} getKey={getKey} />
+        ) : null}
+        {isEye ? (
+          <EyeCom setIsEye={setIsEye} eye={eyeArr} getKey={getKey} />
+        ) : null}
+        {isMouth ? (
+          <MouthCom setIsMouth={setIsMouth} mouth={mouthArr} getKey={getKey} />
+        ) : null}
+        {isCheek ? (
+          <CheekCom setIsCheek={setIsCheek} cheek={cheekArr} getKey={getKey} />
+        ) : null}
       </Closet>
     </>
   );

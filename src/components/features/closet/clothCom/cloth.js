@@ -8,17 +8,17 @@ import OnepieceCom from "./onepiece";
 import { dbService } from "../../../../service/fBase";
 import { collection, query, getDocs } from "firebase/firestore";
 
-const Cloth = ({ cloth }) => {
+const Cloth = ({ cloth, getKey }) => {
   const topArr = {
-    ...cloth.Rtop,
+    ...cloth.top,
   };
 
   const bottomArr = {
-    ...cloth.Rbottom,
+    ...cloth.bottom,
   };
 
   const onepieceArr = {
-    ...cloth.Ronepiece,
+    ...cloth.onepiece,
   };
 
   const [isTop, setIsTop] = useState(false);
@@ -52,12 +52,22 @@ const Cloth = ({ cloth }) => {
       </Category>
 
       <Closet>
-        {isTop ? <TopCom setIsTop={setIsTop} top={topArr} /> : null}
+        {isTop ? (
+          <TopCom setIsTop={setIsTop} top={topArr} getKey={getKey} />
+        ) : null}
         {isBottom ? (
-          <BottomCom setIsBottom={setIsBottom} bottom={bottomArr} />
+          <BottomCom
+            setIsBottom={setIsBottom}
+            bottom={bottomArr}
+            getKey={getKey}
+          />
         ) : null}
         {isOnepiece ? (
-          <OnepieceCom setIsOnepiece={setIsOnepiece} onepiece={onepieceArr} />
+          <OnepieceCom
+            setIsOnepiece={setIsOnepiece}
+            onepiece={onepieceArr}
+            getKey={getKey}
+          />
         ) : null}
       </Closet>
     </>
