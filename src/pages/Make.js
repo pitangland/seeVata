@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "../shared/theme.css";
 
@@ -9,24 +9,28 @@ import FaceFeat from "../components/features/closet/faceCom/face";
 import ClothFeat from "../components/features/closet/clothCom/cloth";
 import AccessoryFeat from "../components/features/closet/accessoryCom/accessory";
 
-import { AiOutlineLeft } from "react-icons/ai";
+import { dbService } from "../service/fBase";
+import { collection, query, getDocs } from "firebase/firestore";
 
-// import { dbService, storageService } from "../service/fBase";
-// import {
-//   addDoc,
-//   collection,
-//   query,
-//   onSnapshot,
-//   orderBy,
-// } from "firebase/firestore";
-// import { ref, uploadString, getDownloadURL } from "@firebase/storage";
+import { AiOutlineLeft } from "react-icons/ai";
 
 const Make = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { nickName } = location.state;
+
+  const naviPrev = () => {
+    navigate(-1);
+  };
 
   const naviDone = () => {
     navigate("/Done");
   };
+
+  const [face, setFace] = useState([]);
+  const [cloth, setCloth] = useState([]);
+  const [accessory, setAccessory] = useState([]);
 
   const [isFace, setIsFace] = useState(false);
   const [isCloth, setIsCloth] = useState(false);
@@ -50,18 +54,39 @@ const Make = () => {
     setIsCloth(false);
   };
 
-  // useEffect(() => {
-  //   const q = query(
-  //     collection(dbService, "closet"),
-  //     orderBy("createdAt", "desc")
-  //   );
-  // });
+  const getCloset = async () => {
+    const q = query(collection(dbService, "closet"));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.data());
+      if (doc.id === "face") {
+        const faceArr = {
+          ...doc.data(),
+        };
+        setFace(faceArr);
+      } else if (doc.id === "cloth") {
+        const clothArr = {
+          ...doc.data(),
+        };
+        setCloth(clothArr);
+      } else {
+        const accessArr = {
+          ...doc.data(),
+        };
+        setAccessory(accessArr);
+      }
+    });
+  };
+  useEffect(() => {
+    getCloset();
+  }, []);
 
   return (
     <>
       <Top>
-        <AiOutlineLeft />
-        <Title>000님의 seeVata</Title>
+        <AiOutlineLeft onClick={naviPrev} />
+        <Title>{nickName}님의 seeVata</Title>
         <Success onClick={naviDone}>완성</Success>
       </Top>
       {isFace ? (
@@ -77,9 +102,14 @@ const Make = () => {
       </Category>
 
       <Closet>
-        {isFace ? <FaceFeat setIsFace={setIsFace} /> : null}
-        {isCloth ? <ClothFeat setIsCloth={setIsCloth} /> : null}
-        {isAccessory ? <AccessoryFeat setIsAccessory={setIsAccessory} /> : null}
+        {isFace ? <FaceFeat setIsFace={setIsFace} face={face} /> : null}
+        {isCloth ? <ClothFeat setIsCloth={setIsCloth} cloth={cloth} /> : null}
+        {isAccessory ? (
+          <AccessoryFeat
+            setIsAccessory={setIsAccessory}
+            accessory={accessory}
+          />
+        ) : null}
       </Closet>
     </>
   );
@@ -139,9 +169,11 @@ let Success = styled.div`
 
 let Category = styled.div`
   display: flex;
-  margin-left: -35vw;
+  flex-direction: row;
+  align-items: flex-start;
+
   margin-top: 3vh;
-  // margin-top: 431px;
+  margin-left: -130px;
   margin-bottom: 8px;
 
   z-index: 40;
@@ -213,6 +245,7 @@ let Access = styled.div`
 `;
 
 let Closet = styled.div`
+
   border: 1px;
   border-radius: 20px;
   width: 100%;
@@ -220,7 +253,7 @@ let Closet = styled.div`
   left 1px;
   top: 431px;
 
-  background: #f0f1f3;
+  background: #ffffff;
   z-index: 40;
 `;
 

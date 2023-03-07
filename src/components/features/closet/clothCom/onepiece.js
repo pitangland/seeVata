@@ -1,27 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 
-const onepiece = () => {
+import Card from "../../Card";
+
+const onepiece = ({ onepiece }) => {
   return (
     <>
-      <Category>onepiece</Category>
+      <Category>
+        {Object.entries(onepiece).map(([id, value]) => (
+          <Card img={value} id={id} />
+        ))}
+      </Category>
     </>
   );
 };
 
 let Category = styled.div`
   //   border: 1px solid;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 3fr);
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
   margin: 2vh;
   gap: 24px;
 
-  width: 263px;
-  height: 14px;
-  left: 33px;
-  top: 450px;
   z-index: 41;
 
   font-family: "Roboto";

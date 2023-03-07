@@ -8,7 +8,19 @@ import OnepieceCom from "./onepiece";
 import { dbService } from "../../../../service/fBase";
 import { collection, query, getDocs } from "firebase/firestore";
 
-const Cloth = () => {
+const Cloth = ({ cloth }) => {
+  const topArr = {
+    ...cloth.Rtop,
+  };
+
+  const bottomArr = {
+    ...cloth.Rbottom,
+  };
+
+  const onepieceArr = {
+    ...cloth.Ronepiece,
+  };
+
   const [isTop, setIsTop] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
   const [isOnepiece, setIsOnepiece] = useState(false);
@@ -31,20 +43,6 @@ const Cloth = () => {
     setIsBottom(false);
   };
 
-  const getNickName = async () => {
-    const q = query(collection(dbService, "cloth"));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data().top);
-      // setNickName(doc.data().userObj.nickName);
-    });
-  };
-
-  useEffect(() => {
-    getNickName();
-  }, []);
-
   return (
     <>
       <Category>
@@ -54,9 +52,13 @@ const Cloth = () => {
       </Category>
 
       <Closet>
-        {isTop ? <TopCom setIsTop={setIsTop} /> : null}
-        {isBottom ? <BottomCom setIsBottom={setIsBottom} /> : null}
-        {isOnepiece ? <OnepieceCom setIsOnepiece={setIsOnepiece} /> : null}
+        {isTop ? <TopCom setIsTop={setIsTop} top={topArr} /> : null}
+        {isBottom ? (
+          <BottomCom setIsBottom={setIsBottom} bottom={bottomArr} />
+        ) : null}
+        {isOnepiece ? (
+          <OnepieceCom setIsOnepiece={setIsOnepiece} onepiece={onepieceArr} />
+        ) : null}
       </Closet>
     </>
   );
@@ -90,6 +92,13 @@ let Top = styled.div``;
 let Bottom = styled.div``;
 let Onepiece = styled.div``;
 
-let Closet = styled.div``;
+let Closet = styled.div`
+  height: 45vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 export default Cloth;

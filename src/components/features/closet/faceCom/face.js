@@ -6,7 +6,23 @@ import EyeCom from "./eye";
 import MouthCom from "./mouth";
 import CheekCom from "./cheek";
 
-const Face = () => {
+const Face = ({ face }) => {
+  const colorArr = {
+    ...face.Rcolor,
+  };
+
+  const eyeArr = {
+    ...face.Reye,
+  };
+
+  const mouthArr = {
+    ...face.Rmouth,
+  };
+
+  const cheekArr = {
+    ...face.Rcheek,
+  };
+
   const [isColor, setIsColor] = useState(false);
   const [isEye, setIsEye] = useState(false);
   const [isMouth, setIsMouth] = useState(false);
@@ -50,10 +66,10 @@ const Face = () => {
       </Category>
 
       <Closet>
-        {isColor ? <ColorCom setIsColor={setIsColor} /> : null}
-        {isEye ? <EyeCom setIsEye={setIsEye} /> : null}
-        {isMouth ? <MouthCom setIsMouth={setIsMouth} /> : null}
-        {isCheek ? <CheekCom setIsCheek={setIsCheek} /> : null}
+        {isColor ? <ColorCom setIsColor={setIsColor} color={colorArr} /> : null}
+        {isEye ? <EyeCom setIsEye={setIsEye} eye={eyeArr} /> : null}
+        {isMouth ? <MouthCom setIsMouth={setIsMouth} mouth={mouthArr} /> : null}
+        {isCheek ? <CheekCom setIsCheek={setIsCheek} cheek={cheekArr} /> : null}
       </Closet>
     </>
   );
@@ -88,6 +104,15 @@ let Eye = styled.div``;
 let Mouth = styled.div``;
 let Cheek = styled.div``;
 
-let Closet = styled.div``;
+let Closet = styled.div`
+  height: 46.5vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  background-color: #ffffff;
+`;
 
 export default Face;
