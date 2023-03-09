@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/seeVata/static/css/main.d21c1015.css",
+    "main.js": "/seeVata/static/js/main.be20f6e2.js",
+    "static/js/787.cda612ba.chunk.js": "/seeVata/static/js/787.cda612ba.chunk.js",
+    "static/media/logo.png": "/seeVata/static/media/logo.748b2eaee373d1c55e2e.png",
+    "static/media/BottomImg.png": "/seeVata/static/media/BottomImg.65736dcd78da956f9b0c.png",
+    "static/media/Main.png": "/seeVata/static/media/Main.c5babccd60045e116008.png",
+    "index.html": "/seeVata/index.html",
+    "main.d21c1015.css.map": "/seeVata/static/css/main.d21c1015.css.map",
+    "main.be20f6e2.js.map": "/seeVata/static/js/main.be20f6e2.js.map",
+    "787.cda612ba.chunk.js.map": "/seeVata/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d21c1015.css",
+    "static/js/main.be20f6e2.js"
+  ]
+}
