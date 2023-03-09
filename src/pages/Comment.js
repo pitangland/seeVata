@@ -1,77 +1,88 @@
-import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import "../shared/theme.css";
-
-import avata from "../assets/img/logo.png";
-import FaceFeat from "../components/features/closet/faceCom/face";
-import ClothFeat from "../components/features/closet/clothCom/cloth";
-import AccessoryFeat from "../components/features/closet/accessoryCom/accessory";
+import Logo from "../assets/img/logo.png";
 
 import { AiOutlineLeft } from "react-icons/ai";
 
-// import { dbService, storageService } from "../service/fBase";
-// import {
-//   addDoc,
-//   collection,
-//   query,
-//   onSnapshot,
-//   orderBy,
-// } from "firebase/firestore";
-// import { ref, uploadString, getDownloadURL } from "@firebase/storage";
+import "../shared/theme.css";
 
-const Make = () => {
-  const [isFace, setIsFace] = useState(false);
-  const [isCloth, setIsCloth] = useState(false);
-  const [isAccessory, setIsAccessory] = useState(false);
+const Comment = () => {
+  const [myTypingNum, setMyTypingNum] = useState("");
 
-  const faceModal = () => {
-    console.log("faceClick");
-    setIsFace(!isFace);
+  const location = useLocation();
+
+  // const { nickName } = location.state;
+
+  const navigate = useNavigate();
+
+  const naviPrev = () => {
+    navigate(-1);
   };
 
-  const clothModal = () => {
-    console.log("clothClick");
-    setIsCloth(!isCloth);
+  const handleText = (e) => {
+    setMyTypingNum(e.target.value);
   };
 
-  const accessoryModal = () => {
-    console.log("accessoryClick");
-    setIsAccessory(!isAccessory);
-  };
-
-  // useEffect(() => {
-  //   const q = query(
-  //     collection(dbService, "closet"),
-  //     orderBy("createdAt", "desc")
-  //   );
-  // });
+  // authService === uid 이면 완성됐다고!
+  // 아니라면 친구꺼 만들어준 페이지 보여주기
 
   return (
     <>
-      <Top>
-        <AiOutlineLeft />
+      <Head>
+        <AiOutlineLeft onClick={naviPrev} />
         <Title>000님의 seeVata</Title>
         <Success>완성</Success>
-      </Top>
-      <AvataImg src={avata} alt="avata"></AvataImg>
+      </Head>
+      <Que src={Logo} alt="rabbit" />
+      <TextBox>
+        <Text>000님에게 한마디!</Text>
+        <TextSend
+          col="25"
+          row="3"
+          maxLength={100}
+          onChange={(e) => handleText(e)}
+        ></TextSend>
+        <TextLength>{myTypingNum.length}/100</TextLength>
+      </TextBox>
 
-      <Category>
-        <Face onClick={faceModal}>얼굴</Face>
-        <Cloth onClick={clothModal}>옷</Cloth>
-        <Access onClick={accessoryModal}>악세사리</Access>
-      </Category>
-
-      <Closet>
-        {isFace ? <FaceFeat setIsFace={setIsFace} /> : null}
-        {isCloth ? <ClothFeat setIsCloth={setIsCloth} /> : null}
-        {isAccessory ? <AccessoryFeat setIsAccessory={setIsAccessory} /> : null}
-      </Closet>
+      <Next>
+        <See>000님에게 공유하기</See>
+      </Next>
     </>
   );
 };
 
-let Top = styled.div`
+let See = styled.div`
+  margin-top: 1vh;
+  width: 342.95px;
+  height: 56px;
+  left: 24px;
+  top: 681px;
+
+  background: #272a33;
+  border-radius: 6px;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+let Head = styled.div`
   display: flex;
   align-items: baseline;
   flex-direction: row;
@@ -91,6 +102,80 @@ let Title = styled.div`
   color: #272a33;
 `;
 
+let TextBox = styled.div`
+  margin-top: 5vh;
+
+  width: 342px;
+  height: 170px;
+  left: 24px;
+  top: 499px;
+
+  background: #000000;
+  border-radius: 14px;
+`;
+
+let Text = styled.div`
+  position: position;
+  display: inline;
+
+  width: 109px;
+  height: 16px;
+  left: 140px;
+  top: 512px;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+
+  color: #ffffff;
+`;
+
+let TextSend = styled.textarea`
+  display: -webkit-inline-box;
+
+  width: 326px;
+  height: 120px;
+  left: 32px;
+  top: 541px;
+
+  background: #ffffff;
+  border-radius: 8px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:focus {
+    border: none;
+  }
+`;
+
+let TextLength = styled.div`
+  display: none;
+
+  margin-bottom: 10vh;
+
+  // display: flex;
+  justify-content: flex-end;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+
+  text-align: right;
+
+  // color: #272a33;
+  color: red;
+  border: 1px solid red;
+
+  opacity: 0.4;
+`;
+
 let Success = styled.div`
   width: 56px;
   height: 28px;
@@ -99,110 +184,16 @@ let Success = styled.div`
   border-radius: 40px;
 `;
 
-let Category = styled.div`
-  display: flex;
-  margin-left: -35vw;
-  margin-top: 3vh;
-  // margin-top: 431px;
-  margin-bottom: 8px;
+let Que = styled.img`
+  width: 143px;
+  height: 299px;
 
-  z-index: 40;
+  margin-top: 7vh;
 `;
 
-let Face = styled.div`
-  // border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-right: 1vw;
-
-  width: 64px;
-  height: 28px;
-
-  background: #d9d9d9;
-  border-radius: 40px;
-  opacity: 0.3;
-
-  font-size: 12px;
-  font-weight: 700;
-
-  &: hover {
-    opacity: 1;
-  }
+let Next = styled.div`
+  margin-top: 2vh;
+  text-align: center;
 `;
 
-let Cloth = styled.div`
-  // border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-right: 1vw;
-
-  width: 64px;
-  height: 28px;
-
-  background: #d9d9d9;
-  border-radius: 40px;
-  opacity: 0.3;
-
-  font-size: 12px;
-  font-weight: 700;
-
-  &: hover {
-    opacity: 1;
-  }
-`;
-
-let Access = styled.div`
-  // border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  width: 64px;
-  height: 28px;
-
-  background: #d9d9d9;
-  border-radius: 40px;
-  opacity: 0.3;
-
-  font-size: 12px;
-  font-weight: 700;
-
-  &: hover {
-    opacity: 1;
-  }
-`;
-
-let Closet = styled.div`
-  border: 1px;
-  border-radius: 20px;
-  width: 100%;
-  height: 100%;
-  left 1px;
-  top: 431px;
-
-  background: #f0f1f3;
-  z-index: 40;
-`;
-
-let animation = keyframes`
-0% {
-  transform: scale(1,1);
-}
-50%{
-  transform: scale(1.25,1.25) translate(0, 20px);
-}
-100%{
-  transform: scale(1.8,1.8) translate(0, 50px);
-}
-
-`;
-
-let AvataImg = styled.img`
-  ${Face}: hover {
-  }
-  // animation: ${animation} 1s forwards;
-`;
-
-export default Make;
+export default Comment;

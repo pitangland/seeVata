@@ -1,9 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Card = ({ img, id, getKey }) => {
+  const [isKey, setIsKey] = useState(true);
+
   const onClick = (key) => {
-    getKey(key.target.id);
+    setIsKey(!isKey);
+
+    console.log(isKey);
+
+    if (isKey) getKey(key.target.id);
+    else getKey("empty");
+    // getKey(key.target.id);
   };
 
   useEffect(() => {}, []);

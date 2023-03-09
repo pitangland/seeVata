@@ -33,6 +33,7 @@ const Login = () => {
     const userObj = {
       id: authService.currentUser.uid,
       nickName: nickName,
+      uri: "",
     };
 
     await setDoc(doc(dbService, "users", authService.currentUser.uid), {

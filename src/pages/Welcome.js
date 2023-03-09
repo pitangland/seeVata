@@ -19,6 +19,7 @@ const Welcome = () => {
   const naviMake = () => {
     navigate("/Make", {
       state: {
+        id,
         nickName,
       },
     });

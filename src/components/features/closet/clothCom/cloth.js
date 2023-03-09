@@ -5,9 +5,6 @@ import TopCom from "./top";
 import BottomCom from "./bottom";
 import OnepieceCom from "./onepiece";
 
-import { dbService } from "../../../../service/fBase";
-import { collection, query, getDocs } from "firebase/firestore";
-
 const Cloth = ({ cloth, getKey }) => {
   const topArr = {
     ...cloth.top,
