@@ -7,13 +7,14 @@ import "../shared/theme.css";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
-import { doc, setDoc } from "@firebase/firestore";
+import { doc, setDoc, collection } from "@firebase/firestore";
 
 // import { ReactComponent as NextButton } from "../assets/img/nextButton.png";
 import { authService } from "../service/fBase";
 
 const Login = () => {
   const navigate = useNavigate();
+
   const naviHome = () => {
     navigate("/");
   };
@@ -36,12 +37,18 @@ const Login = () => {
       uri: "",
     };
 
-    await setDoc(doc(dbService, "users", authService.currentUser.uid), {
+    const ref = collection(dbService, "users");
+
+    await setDoc(doc(ref, authService.currentUser.uid), {
       userObj,
     });
     setNickName("");
 
-    navigate("/Wel");
+    navigate("/Wel", {
+      state: {
+        id: authService.currentUser.uid,
+      },
+    });
   };
 
   return (

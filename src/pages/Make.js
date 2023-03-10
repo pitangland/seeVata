@@ -23,7 +23,8 @@ import {
 import { ref, uploadString, getDownloadURL } from "@firebase/storage";
 
 import { AiOutlineLeft } from "react-icons/ai";
-import avata from "../assets/img/logo.png";
+// import avata from "../assets/img/avata.svg";
+import { ReactComponent as AvataImg } from "../assets/img/avata.svg";
 
 const Make = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const Make = () => {
   const [rneck, setRneck] = useState("");
   const [rear, setRear] = useState("");
 
-  const [isFace, setIsFace] = useState(false);
+  const [isFace, setIsFace] = useState(true);
   const [isCloth, setIsCloth] = useState(false);
   const [isAccessory, setIsAccessory] = useState(false);
 
@@ -89,12 +90,10 @@ const Make = () => {
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // console.log(doc.data());
       if (doc.id === "face") {
         const faceArr = {
           ...doc.data(),
         };
-        // console.log(faceArr);
         setFace(faceArr);
       } else if (doc.id === "cloth") {
         const clothArr = {
@@ -168,7 +167,8 @@ const Make = () => {
       //     .toDataURL("image/jpeg")
       //     .replace("image/jpeg", "image/octet-stream")
       // );
-      // console.log(canvas.toDataURL("img/png"));
+      // console.log(canvas.toDataURL("image/png"));
+      // document.body.appendChild(canvas);
       onSave(canvas.toDataURL("img/png"));
     });
   };
@@ -202,10 +202,8 @@ const Make = () => {
       </Head>
       {isFace ? (
         <>
-          <Avata className="aniBig">
-            {rcolor === "" ? null : (
-              <Color src={face.Rcolor[rcolor]} alt={rcolor}></Color>
-            )}
+          <Avata className="aniBig" id="Div">
+            {/* {rcolor === "" ? null : <Color bgc={face.Rcolor[rcolor]}></Color>} */}
             {reye === "" ? null : <Eye src={face.Reye[reye]} alt={reye}></Eye>}
             {rmouth === "" ? null : (
               <Mouth src={face.Rmouth[rmouth]} alt={rmouth}></Mouth>
@@ -235,14 +233,16 @@ const Make = () => {
             {rear === "" ? null : (
               <Ear src={accessory.Rear[rear]} alt={rear}></Ear>
             )}
-            <Base src={avata} alt="avata" />
+            {rcolor === "" ? (
+              <AvataImg fill="ffffff" />
+            ) : (
+              <AvataImg bgc={face.Rcolor[rcolor]} fill={face.Rcolor[rcolor]} />
+            )}
           </Avata>
         </>
       ) : (
         <Avata id="Div">
-          {rcolor === "" ? null : (
-            <Color src={face.Rcolor[rcolor]} alt={rcolor}></Color>
-          )}
+          {/* {rcolor === "" ? null : <Color bgc={face.Rcolor[rcolor]}></Color>} */}
           {reye === "" ? null : <Eye src={face.Reye[reye]} alt={reye}></Eye>}
           {rmouth === "" ? null : (
             <Mouth src={face.Rmouth[rmouth]} alt={rmouth}></Mouth>
@@ -271,7 +271,11 @@ const Make = () => {
           {rear === "" ? null : (
             <Ear src={accessory.Rear[rear]} alt={rear}></Ear>
           )}
-          <Base src={avata} alt="avata" />
+          {rcolor === "" ? (
+            <AvataImg fill="ffffff" />
+          ) : (
+            <AvataImg bgc={face.Rcolor[rcolor]} fill={face.Rcolor[rcolor]} />
+          )}
         </Avata>
       )}
 
@@ -450,19 +454,6 @@ let Avata = styled.div`
 
   width: 120px;
   height: 250px;
-`;
-
-let Base = styled.img`
-  positioin: relative;
-
-  width: 117px;
-  height: 245px;
-
-  // z-index: 1;
-`;
-
-let Color = styled.div`
-  color: ${({ color }) => (color === "white" ? "white" : color)}; ;
 `;
 
 let Eye = styled.img`

@@ -13,11 +13,11 @@ import "../shared/theme.css";
 const Main = () => {
   const location = useLocation();
 
-  //   const { nickName } = location.state;
+  const { id, nickName, img } = location.state;
 
   const navigate = useNavigate();
 
-  const naviMake = () => {
+  const navi = () => {
     navigate("/Make");
   };
 
@@ -38,7 +38,7 @@ const Main = () => {
         </Title>
         <BsBoxArrowRight />
       </Head>
-      <Que src={Logo} alt="rabbit" />
+      <Que src={img} alt="rabbit" />
       <Next>
         <See>친구들에게 seeVata를 요청하세요!</See>
         <MainAlt src={BottomImg} alt="BottomImg" />

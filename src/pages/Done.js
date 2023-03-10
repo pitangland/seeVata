@@ -21,8 +21,14 @@ const Done = () => {
 
   const navigate = useNavigate();
 
-  const naviMake = () => {
-    navigate("/Make");
+  const naviMain = () => {
+    navigate("/Main", {
+      state: {
+        id,
+        nickName,
+        img,
+      },
+    });
   };
 
   const naviPrev = () => {
@@ -41,14 +47,14 @@ const Done = () => {
       return;
     }
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
-      console.log(doc.data().userObj.uri);
+      // console.log(doc.data());
+      // console.log(doc.data().userObj.uri);
       setImg(doc.data().userObj.uri);
     });
   };
 
   useEffect(() => {
-    console.log(id);
+    // console.log(id);
     getImg();
   }, []);
 
@@ -56,7 +62,7 @@ const Done = () => {
     <>
       <Top>
         <AiOutlineLeft onClick={naviPrev} />
-        <AiOutlineClose />
+        <AiOutlineClose onClick={naviMain} />
       </Top>
       <Wel>
         {nickName}님의 seeVata가 <br />
@@ -64,7 +70,7 @@ const Done = () => {
       </Wel>
       <Que src={img} alt="rabbit" />
       <Next>
-        <See>{nickName}님의 방보기</See>
+        <See onClick={naviMain}>{nickName}님의 방보기</See>
       </Next>
     </>
   );

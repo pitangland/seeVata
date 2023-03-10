@@ -23,7 +23,7 @@ const Face = ({ face, getKey }) => {
     ...face.cheek,
   };
 
-  const [isColor, setIsColor] = useState(false);
+  const [isColor, setIsColor] = useState(true);
   const [isEye, setIsEye] = useState(false);
   const [isMouth, setIsMouth] = useState(false);
   const [isCheek, setIsCheek] = useState(false);

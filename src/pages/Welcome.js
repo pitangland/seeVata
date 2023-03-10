@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import QueRabbit from "../assets/img/QueRabbit.png";
 
 import "../shared/theme.css";
 
 import { authService, dbService } from "../service/fBase";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, doc, query, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Welcome = () => {
-  const [id, setId] = useState("");
+  // const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
+
+  const location = useLocation();
+  const { id } = location.state;
 
   const navigate = useNavigate();
 
@@ -25,19 +28,21 @@ const Welcome = () => {
     });
   };
 
-  onAuthStateChanged(authService, async (user) => {
-    // Do something with user
-    // console.log(user.uid);
-    setId(user.uid);
-  });
+  // onAuthStateChanged(authService, async (user) => {
+  //   // Do something with user
+  //   // console.log(user.uid);
+  //   setId(user.uid);
+  // });
 
   const getNickName = async () => {
-    const q = query(collection(dbService, "users", id));
+    const ref = collection(dbService, "users");
+    const q = query(ref, id);
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data().userObj.nickName);
-      setNickName(doc.data().userObj.nickName);
+      if (doc.id === id) {
+        setNickName(doc.data().userObj.nickName);
+      }
     });
   };
 

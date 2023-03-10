@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Card from "../../Card";
 
 const color = ({ color, getKey }) => {
+  const isColor = true;
+
   return (
     <>
       <Category>
         {Object.entries(color).map(([id, value]) => (
-          <Card img={value} id={id} getKey={getKey} />
+          <Card img={value} id={id} getKey={getKey} isColor={isColor} />
         ))}
       </Category>
     </>

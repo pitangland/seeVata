@@ -20,7 +20,7 @@ const Accessory = ({ accessory, getKey }) => {
     ...accessory.ear,
   };
 
-  const [isHair, setIsHair] = useState(false);
+  const [isHair, setIsHair] = useState(true);
   const [isNeck, setIsNeck] = useState(false);
   const [isEar, setIsEar] = useState(false);
 
@@ -49,7 +49,7 @@ const Accessory = ({ accessory, getKey }) => {
       <Category>
         <Hair onClick={hairModal}>머리</Hair>
         <Neck onClick={neckModal}>목걸이</Neck>
-        <Ear onClick={earModal}>귀걸이</Ear>
+        <Ear onClick={earModal}>안경</Ear>
       </Category>
       <Closet>
         {isHair ? (

@@ -18,7 +18,7 @@ const Cloth = ({ cloth, getKey }) => {
     ...cloth.onepiece,
   };
 
-  const [isTop, setIsTop] = useState(false);
+  const [isTop, setIsTop] = useState(true);
   const [isBottom, setIsBottom] = useState(false);
   const [isOnepiece, setIsOnepiece] = useState(false);
 
