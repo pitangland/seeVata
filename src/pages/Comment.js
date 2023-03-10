@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import Logo from "../assets/img/logo.png";
 
 import { AiOutlineLeft } from "react-icons/ai";
+
+import { dbService } from "../service/fBase";
+import { doc, setDoc, collection, query, getDocs } from "@firebase/firestore";
 
 import "../shared/theme.css";
 
@@ -13,7 +16,8 @@ const Comment = () => {
 
   const location = useLocation();
 
-  // const { nickName } = location.state;
+  const comment = useRef();
+  const { id, nickName, url } = location.state;
 
   const navigate = useNavigate();
 
@@ -21,34 +25,60 @@ const Comment = () => {
     navigate(-1);
   };
 
+  const naviDone = () => {
+    navigate("/Done");
+  };
+
   const handleText = (e) => {
     setMyTypingNum(e.target.value);
   };
 
-  // authService === uid 이면 완성됐다고!
-  // 아니라면 친구꺼 만들어준 페이지 보여주기
+  const onSave = async () => {
+    const co = collection(dbService, "users");
+    const q = query(co);
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((docs) => {
+      const data = docs.data();
+      console.log(data.allObj);
+      for (const key in data.allObj) {
+        const obj = data.allObj[key];
+        if (obj.url === url) {
+          console.log(obj.com);
+          console.log(comment.current.value);
+          setDoc(doc(dbService, "users", id), {
+            [`allObj.${key}.com`]: comment.current.value,
+          });
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    console.log(url);
+  }, []);
 
   return (
     <>
       <Head>
         <AiOutlineLeft onClick={naviPrev} />
-        <Title>000님의 seeVata</Title>
-        <Success>완성</Success>
+        <Title>{nickName}님의 seeVata</Title>
       </Head>
-      <Que src={Logo} alt="rabbit" />
+      <Que src={url} alt="rabbit" />
       <TextBox>
-        <Text>000님에게 한마디!</Text>
+        <Text>{nickName}님에게 한마디!</Text>
         <TextSend
           col="25"
           row="3"
           maxLength={100}
+          ref={comment}
           onChange={(e) => handleText(e)}
         ></TextSend>
         <TextLength>{myTypingNum.length}/100</TextLength>
       </TextBox>
 
       <Next>
-        <See>000님에게 공유하기</See>
+        <See onClick={onSave}>{nickName}님에게 공유하기</See>
       </Next>
     </>
   );

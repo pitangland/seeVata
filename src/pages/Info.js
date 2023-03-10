@@ -10,15 +10,12 @@ import { MdMoveToInbox, MdModeEdit } from "react-icons/md";
 import "../shared/theme.css";
 
 const Info = () => {
-  //   const location = useLocation();
+  const location = useLocation();
 
-  //   const { nickName } = location.state;
+  const { img, key, com } = location.state;
 
+  console.log(com);
   const navigate = useNavigate();
-
-  const naviMake = () => {
-    navigate("/Make");
-  };
 
   const naviPrev = () => {
     navigate(-1);
@@ -32,10 +29,9 @@ const Info = () => {
       <Head>
         <AiOutlineLeft onClick={naviPrev} />
         <Title>000님의 seeVata</Title>
-        <Success>업새</Success>
       </Head>
       <Box>
-        <Que src={Logo} alt="rabbit" />
+        <Que src={img} alt="rabbit" />
       </Box>
       <Wrap>
         <IconWrapper>
@@ -45,7 +41,7 @@ const Info = () => {
           <MdMoveToInbox className="iconSize" />
         </IconWrapper>
       </Wrap>
-      <Content>content 어쩌구 저쩌구 djWJrn</Content>
+      <Content>{com}</Content>
     </>
   );
 };
@@ -57,7 +53,7 @@ let Head = styled.div`
 `;
 
 let Title = styled.div`
-  margin: 6.5vh 6.5vh 1vh 6.5vh;
+  margin: 6.5vh 6.5vh 1vh 8vh;
   width: 141px;
   height: 36px;
 
@@ -68,14 +64,6 @@ let Title = styled.div`
   line-height: 100%;
 
   color: #272a33;
-`;
-
-let Success = styled.div`
-  width: 56px;
-  height: 28px;
-
-  border: 2px solid #000000;
-  border-radius: 40px;
 `;
 
 let Box = styled.div`

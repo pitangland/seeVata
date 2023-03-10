@@ -1,49 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Card = ({ img, id }) => {
-  const navigate = Navigate();
+const Avata = ({ key, img, com }) => {
+  const navigate = useNavigate();
 
   const naviInfo = () => {
     navigate("/info", {
       state: {
-        id,
+        img,
+        key,
       },
     });
   };
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   return (
     <>
-      <div onClick={naviInfo}>
-        <Img bgc={img} id={id}></Img>
-        <ImgCard src={img} alt={id} id={id} />
-      </div>
+      <ImgCard
+        onClick={naviInfo}
+        src={img}
+        alt={"avata"}
+        key={key}
+        com={com}
+        className="item"
+      />
     </>
   );
 };
 
-export default Card;
-
-let Img = styled.div`
-  width: 100px;
-  height: 100px;
-
-  background: ${({ bgc }) => (bgc === "black" ? "black" : bgc)};
-  border-radius: 18px;
-
-  &: hover {
-    width: 93px;
-    height: 93px;
-    border: 3px solid #000000;
-  }
-`;
+export default Avata;
 
 let ImgCard = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 56px;
+  height: 117px;
 
   background: #f0f1f3;
   border-radius: 18px;
@@ -52,5 +43,14 @@ let ImgCard = styled.img`
     width: 93px;
     height: 93px;
     border: 3px solid #000000;
+  }
+
+  &:nth-child(1),
+  &:nth-child(3),
+  &:nth-child(4),
+  &:nth-child(6),
+  &:nth-child(7),
+  &:nth-child(9) {
+    align-self: end;
   }
 `;

@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, query, getDocs, onSnapshot } from "firebase/firestore";
 
 import "../shared/theme.css";
 
@@ -19,11 +19,11 @@ const Done = () => {
   const navigate = useNavigate();
 
   const naviMain = () => {
+    // navigate(`/Main/${id}`, {
     navigate("/Main", {
       state: {
         id,
         nickName,
-        img,
       },
     });
   };
@@ -32,19 +32,17 @@ const Done = () => {
     navigate(-1);
   };
 
-  // authService === uid 이면 완성됐다고!
-  // 아니라면 친구꺼 만들어준 페이지 보여주기
-
   const getImg = async () => {
     const q = query(collection(dbService, "users"));
 
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-      if (doc.id === id) {
-        setImg(doc.data().userObj.uri);
-      }
+    const snap = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.id === id) {
+          setImg(doc.data().userObj.uri);
+        }
+      });
     });
+    return snap;
   };
 
   useEffect(() => {

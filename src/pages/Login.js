@@ -36,10 +36,13 @@ const Login = () => {
       uri: "",
     };
 
+    const allObj = {};
+
     const ref = collection(dbService, "users");
 
     await setDoc(doc(ref, authService.currentUser.uid), {
       userObj,
+      allObj,
     });
     setNickName("");
 
@@ -84,7 +87,6 @@ let TitleDes = styled.div`
   margin-top: 5vh;
   margin-right: 15vh;
 
-  width: 197px;
   height: 67px;
   left: 23px;
   top: 140px;

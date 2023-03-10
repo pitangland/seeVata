@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { v4 as uuid4 } from "uuid";
 
@@ -10,8 +10,17 @@ import FaceFeat from "../components/features/closet/faceCom/face";
 import ClothFeat from "../components/features/closet/clothCom/cloth";
 import AccessoryFeat from "../components/features/closet/accessoryCom/accessory";
 
-import { dbService, storageService, authService } from "../service/fBase";
-import { collection, query, getDocs, doc, updateDoc } from "firebase/firestore";
+import { dbService, storageService } from "../service/fBase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  collection,
+  query,
+  getDocs,
+  doc,
+  updateDoc,
+  arrayUnion,
+  setDoc,
+} from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "@firebase/storage";
 
 import { AiOutlineLeft } from "react-icons/ai";
@@ -19,9 +28,16 @@ import { ReactComponent as AvataImg } from "../assets/img/avata.svg";
 
 const Make = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
+  const params = useParams();
+  // params.id = useState
 
-  const { id, nickName } = location.state;
+  const [id, setId] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [url, setUrl] = useState("");
+  console.log(url);
+
+  // const { nickName } = location.state;
 
   const naviPrev = () => {
     navigate(-1);
@@ -29,15 +45,38 @@ const Make = () => {
 
   const naviDone = () => {
     onCapture();
-    navigate("/Done", {
-      state: {
-        id,
-        nickName,
-      },
-    });
+    if (isLoggedIn) {
+      navigate("/Done", {
+        state: {
+          id: id,
+          nickName: nickName,
+        },
+      });
+    } else {
+      navigate("/Com", {
+        state: {
+          id,
+          nickName,
+          url,
+        },
+      });
+    }
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const auth = getAuth();
+  const isLog = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        setId(uid);
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  };
 
   const [face, setFace] = useState([]);
   const [cloth, setCloth] = useState([]);
@@ -51,6 +90,7 @@ const Make = () => {
   const [rtop, setRtop] = useState("");
   const [rbottom, setRbottom] = useState("");
   const [ronepiece, setRonepiece] = useState("");
+  const [router, setRouter] = useState("");
 
   const [rhair, setRhair] = useState("");
   const [rneck, setRneck] = useState("");
@@ -100,6 +140,15 @@ const Make = () => {
         setAccessory(accessArr);
       }
     });
+
+    const qu = query(collection(dbService, "users"));
+
+    const quSnapshot = await getDocs(qu);
+    quSnapshot.forEach((doc) => {
+      if (doc.id === id || doc.id === params.id) {
+        setNickName(doc.data().userObj.nickName);
+      }
+    });
   };
 
   const getFace = (text) => {
@@ -131,12 +180,16 @@ const Make = () => {
       setRbottom(text);
     } else if (text.includes("onepiece")) {
       setRonepiece(text);
+    } else if (text.includes("outer")) {
+      setRouter(text);
     } else if (text.includes("TOP")) {
       setRtop("");
     } else if (text.includes("BOTTOM")) {
       setRbottom("");
     } else if (text.includes("ONEPIECE")) {
       setRonepiece("");
+    } else if (text.includes("OUTER")) {
+      setRouter("");
     }
   };
 
@@ -169,7 +222,7 @@ const Make = () => {
       // );
       // console.log(canvas.toDataURL("image/png"));
       // document.body.appendChild(canvas);
-      onSave(canvas.toDataURL("img/png"));
+      onSave(canvas.toDataURL("image/png"));
     });
   };
 
@@ -178,27 +231,47 @@ const Make = () => {
   // 아니면 userObj.all에 저장
   const onSave = async (uri) => {
     let url = "";
+    if (isLoggedIn) {
+      const uriRef = ref(storageService, `${id}/${uuid4()}`);
+      const response = await uploadString(uriRef, uri, "data_url");
 
-    const uriRef = ref(storageService, `${id}/${uuid4()}`);
-    const response = await uploadString(uriRef, uri, "data_url");
+      url = await getDownloadURL(response.ref);
 
-    url = await getDownloadURL(response.ref);
-
-    if (isLoggedIn.uid === id) {
       await updateDoc(doc(dbService, "users", id), {
         "userObj.uri": url,
       });
     } else {
-      await updateDoc(doc(dbService, "users", id), {
-        allObj: url,
-      });
+      const uriRef = ref(storageService, `${params.id}/${uuid4()}`);
+      const response = await uploadString(uriRef, uri, "data_url");
+
+      url = await getDownloadURL(response.ref);
+      const L = url;
+      console.log(L);
+      setUrl(L);
+      console.log("실행돼?");
+
+      const obj = {
+        url: url,
+        com: "",
+      };
+
+      const docRef = doc(dbService, "users", `${params.id}`);
+      await setDoc(
+        docRef,
+        {
+          allObj: arrayUnion(obj),
+        },
+        { merge: true }
+      );
     }
   };
 
   useEffect(() => {
-    console.log(face.glass);
+    isLog();
     getCloset();
-  }, []);
+
+    console.log(url);
+  }, [id, nickName, isLoggedIn, url]);
 
   return (
     <>
@@ -228,6 +301,9 @@ const Make = () => {
                 alt={ronepiece}
                 id="onepiece"
               ></Onepiece>
+            )}
+            {router === "" ? null : (
+              <Outer src={cloth.Router[router]} alt={router} id="outer"></Outer>
             )}
 
             {rhair === "" ? null : (
@@ -265,6 +341,9 @@ const Make = () => {
               src={cloth.Ronepiece[ronepiece]}
               alt={ronepiece}
             ></Onepiece>
+          )}
+          {router === "" ? null : (
+            <Outer src={cloth.Router[router]} alt={router} id="outer"></Outer>
           )}
 
           {rhair === "" ? null : (
@@ -510,6 +589,14 @@ let Onepiece = styled.img`
   height: 245px;
 
   z-index: 4;
+`;
+let Outer = styled.img`
+  position: absolute;
+
+  width: 117px;
+  height: 245px;
+
+  z-index: 5;
 `;
 
 let Hair = styled.img`

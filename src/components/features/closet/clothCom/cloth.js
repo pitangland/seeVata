@@ -4,6 +4,7 @@ import styled from "styled-components";
 import TopCom from "./top";
 import BottomCom from "./bottom";
 import OnepieceCom from "./onepiece";
+import OuterCom from "./outer";
 
 const Cloth = ({ cloth, getKey }) => {
   const topArr = {
@@ -18,26 +19,41 @@ const Cloth = ({ cloth, getKey }) => {
     ...cloth.onepiece,
   };
 
+  const outerArr = {
+    ...cloth.outer,
+  };
+
   const [isTop, setIsTop] = useState(true);
   const [isBottom, setIsBottom] = useState(false);
   const [isOnepiece, setIsOnepiece] = useState(false);
+  const [isOuter, setIsOuter] = useState(false);
 
   const topModal = () => {
     setIsTop(!isTop);
     setIsBottom(false);
     setIsOnepiece(false);
+    setIsOuter(false);
   };
 
   const bottomModal = () => {
     setIsBottom(!isBottom);
     setIsTop(false);
     setIsOnepiece(false);
+    setIsOuter(false);
   };
 
   const onepieceModal = () => {
     setIsOnepiece(!isOnepiece);
     setIsTop(false);
     setIsBottom(false);
+    setIsOuter(false);
+  };
+
+  const OuterModal = () => {
+    setIsOuter(!isOuter);
+    setIsTop(false);
+    setIsBottom(false);
+    setIsOnepiece(false);
   };
 
   return (
@@ -46,6 +62,7 @@ const Cloth = ({ cloth, getKey }) => {
         <Top onClick={topModal}>상의</Top>
         <Bottom onClick={bottomModal}>하의</Bottom>
         <Onepiece onClick={onepieceModal}>원피스</Onepiece>
+        <Outer onClick={OuterModal}>외투</Outer>
       </Category>
 
       <Closet>
@@ -65,6 +82,9 @@ const Cloth = ({ cloth, getKey }) => {
             onepiece={onepieceArr}
             getKey={getKey}
           />
+        ) : null}
+        {isOuter ? (
+          <OuterCom setIsOuter={setIsOuter} outer={outerArr} getKey={getKey} />
         ) : null}
       </Closet>
     </>
@@ -98,6 +118,7 @@ let Category = styled.div`
 let Top = styled.div``;
 let Bottom = styled.div``;
 let Onepiece = styled.div``;
+let Outer = styled.div``;
 
 let Closet = styled.div`
   height: 45vh;

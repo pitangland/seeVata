@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -7,7 +7,10 @@ import BottomImg from "../assets/img/BottomImg.png";
 
 import Avata from "../components/features/Avata";
 
-import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
+import { dbService, authService } from "../service/fBase";
+import { collection, query, getDocs } from "firebase/firestore";
+
+import { AiOutlineLeft } from "react-icons/ai";
 import { BsBoxArrowRight } from "react-icons/bs";
 
 import "../shared/theme.css";
@@ -21,10 +24,7 @@ const Main = () => {
 
   const onCopy = async () => {
     try {
-      await navigator.clipboard.writeText("http://localhost:3000/Make");
-      // const dii = document.createElement("div");
-      // dii.innerHTML = "링크를 복사하였습니다!";
-      // document.getElementById("Div").appendChild(dii);
+      await navigator.clipboard.writeText(`http://localhost:3000/Make/${id}`);
       alert("클립보드에 링크가 복사되었습니다.");
     } catch (e) {
       console.log(
@@ -37,8 +37,29 @@ const Main = () => {
     navigate(-1);
   };
 
-  // authService === uid 이면 완성됐다고!
-  // 아니라면 친구꺼 만들어준 페이지 보여주기
+  const onLogOutClick = () => {
+    authService.signOut();
+    navigate("/");
+  };
+
+  const [avata, setAvata] = useState([]);
+
+  const getAvata = async () => {
+    const q = query(collection(dbService, "users"));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      if (doc.id === id) {
+        setAvata(doc.data().allObj);
+        console.log(avata);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getAvata();
+    console.log(avata);
+  }, []);
 
   return (
     <>
@@ -46,13 +67,15 @@ const Main = () => {
         <AiOutlineLeft onClick={naviPrev} />
         <Title>
           안녕하세요.
-          <br /> 000님의 seeVata입니다.
+          <br /> {nickName}님의 seeVata입니다.
         </Title>
-        <BsBoxArrowRight />
+        <BsBoxArrowRight onClick={onLogOutClick} />
       </Head>
-      {/* {Object.entries(어떤 오브젝트).map(([id, value]) => ( */}
-      {/* <Avata img={value} id={id} /> */}
-      {/* ))} */}
+      <My>
+        {avata.map((doc) => (
+          <Avata key={doc.com} img={doc.url} com={doc.com} />
+        ))}
+      </My>
       <Next>
         <See onClick={onCopy}>친구들에게 seeVata를 요청하세요!</See>
         <MainAlt src={BottomImg} alt="BottomImg" />
@@ -81,7 +104,15 @@ let Title = styled.div`
   color: #272a33;
 `;
 
-let My = styled.div``;
+let My = styled.div`
+  // border: 1px solid;
+  display: grid;
+  grid-template-rows: repeat(3, 160px);
+  grid-template-columns: repeat(3, 50px);
+  // padding: 15px;
+  margin-top: 5vh;
+  gap: 50px;
+`;
 
 let Que = styled.img`
   width: 197px;
@@ -97,14 +128,12 @@ let Next = styled.div`
 
   position: relative;
 
-  margin-top: 8vh;
   text-align: center;
 `;
 
 let See = styled.div`
   z-index: 1;
 
-  margin-top: 7vh;
   width: 342.95px;
   height: 56px;
   left: 24px;
