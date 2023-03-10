@@ -18,5 +18,5 @@ let Box = styled.div`
   // border: 1px solid;
   background: #f7f7f7;
   box-shadow: 0 0 2rem 0.1rem rgba(0, 0, 0, 0.2);
-  font-family: "Hahmlet-Regular";
+  font-family: "Noto Sans KR", sans-serif;
 `;

@@ -9,7 +9,6 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { dbService } from "../service/fBase";
 import { doc, setDoc, collection } from "@firebase/firestore";
 
-// import { ReactComponent as NextButton } from "../assets/img/nextButton.png";
 import { authService } from "../service/fBase";
 
 const Login = () => {
@@ -90,7 +89,7 @@ let TitleDes = styled.div`
   left: 23px;
   top: 140px;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;

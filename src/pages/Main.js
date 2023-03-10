@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "../assets/img/logo.png";
 import BottomImg from "../assets/img/BottomImg.png";
 
+import Avata from "../components/features/Avata";
+
 import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
 import { BsBoxArrowRight } from "react-icons/bs";
 
@@ -17,8 +19,18 @@ const Main = () => {
 
   const navigate = useNavigate();
 
-  const navi = () => {
-    navigate("/Make");
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("http://localhost:3000/Make");
+      // const dii = document.createElement("div");
+      // dii.innerHTML = "링크를 복사하였습니다!";
+      // document.getElementById("Div").appendChild(dii);
+      alert("클립보드에 링크가 복사되었습니다.");
+    } catch (e) {
+      console.log(
+        "복사에 실패하였습니다. 새로고침 후 다시 시도해주시기 바랍니다."
+      );
+    }
   };
 
   const naviPrev = () => {
@@ -38,9 +50,11 @@ const Main = () => {
         </Title>
         <BsBoxArrowRight />
       </Head>
-      <Que src={img} alt="rabbit" />
+      {/* {Object.entries(어떤 오브젝트).map(([id, value]) => ( */}
+      {/* <Avata img={value} id={id} /> */}
+      {/* ))} */}
       <Next>
-        <See>친구들에게 seeVata를 요청하세요!</See>
+        <See onClick={onCopy}>친구들에게 seeVata를 요청하세요!</See>
         <MainAlt src={BottomImg} alt="BottomImg" />
       </Next>
     </>
@@ -66,6 +80,8 @@ let Title = styled.div`
 
   color: #272a33;
 `;
+
+let My = styled.div``;
 
 let Que = styled.img`
   width: 197px;

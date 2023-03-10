@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 import Card from "../../Card";
 
-const ear = ({ ear, getKey }) => {
+const ear = ({ glass, getKey }) => {
   return (
     <>
       <Category>
-        {Object.entries(ear).map(([id, value]) => (
+        {Object.entries(glass).map(([id, value]) => (
           <Card img={value} id={id} getKey={getKey} />
         ))}
       </Category>

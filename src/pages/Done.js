@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import QueRabbit from "../assets/img/QueRabbit.png";
-import Logo from "../assets/img/logo.png";
-
 import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
@@ -42,19 +39,15 @@ const Done = () => {
     const q = query(collection(dbService, "users"));
 
     const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-      console.log("No matching documents.");
-      return;
-    }
+
     querySnapshot.forEach((doc) => {
-      // console.log(doc.data());
-      // console.log(doc.data().userObj.uri);
-      setImg(doc.data().userObj.uri);
+      if (doc.id === id) {
+        setImg(doc.data().userObj.uri);
+      }
     });
   };
 
   useEffect(() => {
-    // console.log(id);
     getImg();
   }, []);
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import HairCom from "./hair";
 import NeckCom from "./neck";
-import EarCom from "./ear";
+import GlassCom from "./glass";
 
 const Accessory = ({ accessory, getKey }) => {
   // console.log(accessory);
@@ -16,28 +16,28 @@ const Accessory = ({ accessory, getKey }) => {
     ...accessory.neck,
   };
 
-  const earArr = {
-    ...accessory.ear,
+  const glassArr = {
+    ...accessory.glass,
   };
 
   const [isHair, setIsHair] = useState(true);
   const [isNeck, setIsNeck] = useState(false);
-  const [isEar, setIsEar] = useState(false);
+  const [isGlass, setIsGlass] = useState(false);
 
   const hairModal = () => {
     setIsHair(!isHair);
     setIsNeck(false);
-    setIsEar(false);
+    setIsGlass(false);
   };
 
   const neckModal = () => {
     setIsNeck(!isNeck);
     setIsHair(false);
-    setIsEar(false);
+    setIsGlass(false);
   };
 
-  const earModal = () => {
-    setIsEar(!isEar);
+  const glassModal = () => {
+    setIsGlass(!isGlass);
     setIsHair(false);
     setIsNeck(false);
   };
@@ -49,7 +49,7 @@ const Accessory = ({ accessory, getKey }) => {
       <Category>
         <Hair onClick={hairModal}>머리</Hair>
         <Neck onClick={neckModal}>목걸이</Neck>
-        <Ear onClick={earModal}>안경</Ear>
+        <Glass onClick={glassModal}>안경</Glass>
       </Category>
       <Closet>
         {isHair ? (
@@ -58,8 +58,8 @@ const Accessory = ({ accessory, getKey }) => {
         {isNeck ? (
           <NeckCom setIsNeck={setIsNeck} neck={neckArr} getKey={getKey} />
         ) : null}
-        {isEar ? (
-          <EarCom setIsEar={setIsEar} ear={earArr} getKey={getKey} />
+        {isGlass ? (
+          <GlassCom setIsGlass={setIsGlass} glass={glassArr} getKey={getKey} />
         ) : null}
       </Closet>
     </>
@@ -92,7 +92,7 @@ let Category = styled.div`
 `;
 let Hair = styled.div``;
 let Neck = styled.div``;
-let Ear = styled.div``;
+let Glass = styled.div``;
 
 let Closet = styled.div`
   height: 45vh;

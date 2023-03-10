@@ -10,8 +10,7 @@ const Card = ({ img, id, getKey, isColor }) => {
     console.log(isKey);
 
     if (isKey) getKey(key.target.id);
-    else getKey("empty");
-    // getKey(key.target.id);
+    else getKey(key.target.id.toUpperCase());
   };
 
   useEffect(() => {}, []);

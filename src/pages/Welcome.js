@@ -6,9 +6,8 @@ import QueRabbit from "../assets/img/QueRabbit.png";
 
 import "../shared/theme.css";
 
-import { authService, dbService } from "../service/fBase";
-import { collection, doc, query, getDocs } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import { dbService } from "../service/fBase";
+import { collection, query, getDocs } from "firebase/firestore";
 
 const Welcome = () => {
   // const [id, setId] = useState("");
@@ -35,8 +34,7 @@ const Welcome = () => {
   // });
 
   const getNickName = async () => {
-    const ref = collection(dbService, "users");
-    const q = query(ref, id);
+    const q = query(collection(dbService, "users"));
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {

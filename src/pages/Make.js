@@ -9,21 +9,12 @@ import "../shared/theme.css";
 import FaceFeat from "../components/features/closet/faceCom/face";
 import ClothFeat from "../components/features/closet/clothCom/cloth";
 import AccessoryFeat from "../components/features/closet/accessoryCom/accessory";
-// import Avata from "../components/features/Avata";
 
-import { dbService, storageService } from "../service/fBase";
-import {
-  collection,
-  query,
-  getDocs,
-  doc,
-  updateDoc,
-  orderBy,
-} from "firebase/firestore";
+import { dbService, storageService, authService } from "../service/fBase";
+import { collection, query, getDocs, doc, updateDoc } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "@firebase/storage";
 
 import { AiOutlineLeft } from "react-icons/ai";
-// import avata from "../assets/img/avata.svg";
 import { ReactComponent as AvataImg } from "../assets/img/avata.svg";
 
 const Make = () => {
@@ -46,6 +37,8 @@ const Make = () => {
     });
   };
 
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+
   const [face, setFace] = useState([]);
   const [cloth, setCloth] = useState([]);
   const [accessory, setAccessory] = useState([]);
@@ -61,7 +54,7 @@ const Make = () => {
 
   const [rhair, setRhair] = useState("");
   const [rneck, setRneck] = useState("");
-  const [rear, setRear] = useState("");
+  const [rglass, setRglass] = useState("");
 
   const [isFace, setIsFace] = useState(true);
   const [isCloth, setIsCloth] = useState(false);
@@ -119,10 +112,13 @@ const Make = () => {
       setRmouth(text);
     } else if (text.includes("cheek")) {
       setRcheek(text);
-    } else {
+    } else if (text.includes("COLOR")) {
       setRcolor("");
+    } else if (text.includes("EYE")) {
       setReye("");
+    } else if (text.includes("MOUTH")) {
       setRmouth("");
+    } else if (text.includes("CHEEK")) {
       setRcheek("");
     }
   };
@@ -135,9 +131,11 @@ const Make = () => {
       setRbottom(text);
     } else if (text.includes("onepiece")) {
       setRonepiece(text);
-    } else {
+    } else if (text.includes("TOP")) {
       setRtop("");
+    } else if (text.includes("BOTTOM")) {
       setRbottom("");
+    } else if (text.includes("ONEPIECE")) {
       setRonepiece("");
     }
   };
@@ -148,12 +146,14 @@ const Make = () => {
       setRhair(text);
     } else if (text.includes("neck")) {
       setRneck(text);
-    } else if (text.includes("ear")) {
-      setRear(text);
-    } else {
+    } else if (text.includes("glass")) {
+      setRglass(text);
+    } else if (text.includes("HAIR")) {
       setRhair("");
+    } else if (text.includes("NECK")) {
       setRneck("");
-      setRear("");
+    } else if (text.includes("GLASS")) {
+      setRglass("");
     }
   };
 
@@ -184,12 +184,19 @@ const Make = () => {
 
     url = await getDownloadURL(response.ref);
 
-    await updateDoc(doc(dbService, "users", id), {
-      "userObj.uri": url,
-    });
+    if (isLoggedIn.uid === id) {
+      await updateDoc(doc(dbService, "users", id), {
+        "userObj.uri": url,
+      });
+    } else {
+      await updateDoc(doc(dbService, "users", id), {
+        allObj: url,
+      });
+    }
   };
 
   useEffect(() => {
+    console.log(face.glass);
     getCloset();
   }, []);
 
@@ -198,12 +205,11 @@ const Make = () => {
       <Head>
         <AiOutlineLeft onClick={naviPrev} />
         <Title>{nickName}님의 seeVata</Title>
-        <Success onClick={naviDone}>완성</Success>
+        {isFace ? null : <Success onClick={naviDone}>완성</Success>}
       </Head>
       {isFace ? (
         <>
-          <Avata className="aniBig" id="Div">
-            {/* {rcolor === "" ? null : <Color bgc={face.Rcolor[rcolor]}></Color>} */}
+          <Avata className="aniBig">
             {reye === "" ? null : <Eye src={face.Reye[reye]} alt={reye}></Eye>}
             {rmouth === "" ? null : (
               <Mouth src={face.Rmouth[rmouth]} alt={rmouth}></Mouth>
@@ -230,19 +236,18 @@ const Make = () => {
             {rneck === "" ? null : (
               <Neck src={accessory.Rneck[rneck]} alt={rneck}></Neck>
             )}
-            {rear === "" ? null : (
-              <Ear src={accessory.Rear[rear]} alt={rear}></Ear>
+            {rglass === "" ? null : (
+              <Glass src={accessory.Rglass[rglass]} alt={rglass}></Glass>
             )}
             {rcolor === "" ? (
-              <AvataImg fill="ffffff" />
+              <AvataImg fill="#ffffff" />
             ) : (
-              <AvataImg bgc={face.Rcolor[rcolor]} fill={face.Rcolor[rcolor]} />
+              <AvataImg fill={face.Rcolor[rcolor]} />
             )}
           </Avata>
         </>
       ) : (
         <Avata id="Div">
-          {/* {rcolor === "" ? null : <Color bgc={face.Rcolor[rcolor]}></Color>} */}
           {reye === "" ? null : <Eye src={face.Reye[reye]} alt={reye}></Eye>}
           {rmouth === "" ? null : (
             <Mouth src={face.Rmouth[rmouth]} alt={rmouth}></Mouth>
@@ -268,13 +273,13 @@ const Make = () => {
           {rneck === "" ? null : (
             <Neck src={accessory.Rneck[rneck]} alt={rneck}></Neck>
           )}
-          {rear === "" ? null : (
-            <Ear src={accessory.Rear[rear]} alt={rear}></Ear>
+          {rglass === "" ? null : (
+            <Glass src={accessory.Rglass[rglass]} alt={rglass}></Glass>
           )}
           {rcolor === "" ? (
-            <AvataImg fill="ffffff" />
+            <AvataImg fill="#ffffff" />
           ) : (
-            <AvataImg bgc={face.Rcolor[rcolor]} fill={face.Rcolor[rcolor]} />
+            <AvataImg fill={face.Rcolor[rcolor]} />
           )}
         </Avata>
       )}
@@ -487,18 +492,24 @@ let Top = styled.img`
 
   width: 117px;
   height: 245px;
+
+  z-index: 2;
 `;
 let Bottom = styled.img`
   position: absolute;
 
   width: 117px;
   height: 245px;
+
+  z-index: 3;
 `;
 let Onepiece = styled.img`
   position: absolute;
 
   width: 117px;
   height: 245px;
+
+  z-index: 4;
 `;
 
 let Hair = styled.img`
@@ -517,7 +528,8 @@ let Neck = styled.img`
   width: 117px;
   height: 245px;
 `;
-let Ear = styled.img`
+
+let Glass = styled.img`
   position: absolute;
 
   z-index: 2;

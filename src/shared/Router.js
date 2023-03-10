@@ -12,23 +12,19 @@ import Info from "../pages/Info";
 
 import Manager from "../pages/Manager";
 
-export default function Router({ authService }) {
+export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} authService={authService} />
-        <Route path="/Login" element={<Login />} authService={authService} />
-        <Route path="/Wel" element={<Wel />} authService={authService} />
-        <Route path="/Make" element={<Make />} authService={authService} />
-        <Route path="/Com" element={<Comment />} authService={authService} />
-        <Route path="/Done" element={<Done />} authService={authService} />
-        <Route path="/Main" element={<Main />} authService={authService} />
-        <Route path="/Info" element={<Info />} authService={authService} />
-        <Route
-          path="/Manager"
-          element={<Manager />}
-          authService={authService}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Wel" element={<Wel />} />
+        <Route path="/Make" element={<Make />} />
+        <Route path="/Com" element={<Comment />} />
+        <Route path="/Done" element={<Done />} />
+        <Route path="/Main" element={<Main />} />
+        <Route path="/Info" element={<Info />} />
+        <Route path="/Manager" element={<Manager />} />
       </Routes>
     </BrowserRouter>
   );
