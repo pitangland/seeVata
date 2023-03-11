@@ -7,17 +7,27 @@ import Logo from "../assets/img/logo.png";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
-import { doc, setDoc, collection, query, getDocs } from "@firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  getDocs,
+  updateDoc,
+  onSnapshot,
+  arrayUnion,
+} from "@firebase/firestore";
 
 import "../shared/theme.css";
 
 const Comment = () => {
   const [myTypingNum, setMyTypingNum] = useState("");
+  const [userUrl, setUserUrl] = useState("");
 
   const location = useLocation();
 
   const comment = useRef();
-  const { id, nickName, url } = location.state;
+  const { id, nickName, newNickName } = location.state;
 
   const navigate = useNavigate();
 
@@ -26,11 +36,34 @@ const Comment = () => {
   };
 
   const naviDone = () => {
-    navigate("/Done");
+    navigate("/Done", {
+      state: {
+        id,
+        newNickName: nickName,
+      },
+    });
   };
 
   const handleText = (e) => {
     setMyTypingNum(e.target.value);
+  };
+
+  const getImg = () => {
+    const q = query(collection(dbService, "users"));
+
+    const snap = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((docs) => {
+        const data = docs.data().myObj;
+        console.log(data);
+        for (const key in data) {
+          if (key === newNickName) {
+            setUserUrl(data[key].uri);
+            console.log(data[key].uri);
+          }
+        }
+      });
+    });
+    return snap;
   };
 
   const onSave = async () => {
@@ -39,23 +72,21 @@ const Comment = () => {
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((docs) => {
-      const data = docs.data();
-      console.log(data.allObj);
-      for (const key in data.allObj) {
-        const obj = data.allObj[key];
-        if (obj.url === url) {
-          console.log(obj.com);
-          console.log(comment.current.value);
-          setDoc(doc(dbService, "users", id), {
-            [`allObj.${key}.com`]: comment.current.value,
+      const data = docs.data().myObj;
+      console.log(data);
+      for (const key in data) {
+        if (key === newNickName) {
+          updateDoc(doc(dbService, "users", id), {
+            [`myObj.${newNickName}.com`]: comment.current.value,
           });
         }
       }
     });
+    naviDone();
   };
 
   useEffect(() => {
-    console.log(url);
+    getImg();
   }, []);
 
   return (
@@ -64,7 +95,7 @@ const Comment = () => {
         <AiOutlineLeft onClick={naviPrev} />
         <Title>{nickName}님의 seeVata</Title>
       </Head>
-      <Que src={url} alt="rabbit" />
+      <Que src={userUrl} alt="rabbit" />
       <TextBox>
         <Text>{nickName}님에게 한마디!</Text>
         <TextSend

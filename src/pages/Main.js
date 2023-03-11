@@ -24,7 +24,9 @@ const Main = () => {
 
   const onCopy = async () => {
     try {
-      await navigator.clipboard.writeText(`http://localhost:3000/Make/${id}`);
+      await navigator.clipboard.writeText(
+        `https://pitangland.github.io/seeVata/Nick/${id}`
+      );
       alert("클립보드에 링크가 복사되었습니다.");
     } catch (e) {
       console.log(
@@ -50,15 +52,28 @@ const Main = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       if (doc.id === id) {
-        setAvata(doc.data().allObj);
-        console.log(avata);
+        const data = {
+          ...doc.data().myObj,
+        };
+
+        Object.entries(data).map(([id, value]) => {
+          console.log(id, value);
+          Object.entries(value).map(([id, value]) => {
+            console.log(id, value);
+            setAvata(data);
+          });
+        });
+        console.log(doc.data().myObj);
+        console.log(data);
+        // setAvata(...data);
+        // console.log(avata);
       }
     });
   };
 
   useEffect(() => {
     getAvata();
-    console.log(avata);
+    // console.log(avata);
   }, []);
 
   return (

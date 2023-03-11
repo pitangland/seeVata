@@ -19,7 +19,12 @@ const Welcome = () => {
   const navigate = useNavigate();
 
   const naviMake = () => {
-    navigate(`/Make`);
+    navigate(`/Make`, {
+      state: {
+        id,
+        nickName,
+      },
+    });
   };
 
   // onAuthStateChanged(authService, async (user) => {

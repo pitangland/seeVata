@@ -12,14 +12,13 @@ import "../shared/theme.css";
 const Done = () => {
   const location = useLocation();
 
-  const { id, nickName } = location.state;
+  const { id, nickName, newNickName, isLoggedIn } = location.state;
 
   const [img, setImg] = useState("");
 
   const navigate = useNavigate();
 
   const naviMain = () => {
-    // navigate(`/Main/${id}`, {
     navigate("/Main", {
       state: {
         id,
@@ -37,8 +36,17 @@ const Done = () => {
 
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        if (doc.id === id) {
+        console.log(doc.data().allObj);
+        if (doc.id === id && isLoggedIn) {
           setImg(doc.data().userObj.uri);
+        } else {
+          const all = doc.data().myObj;
+          Object.entries(all).map(([id, value]) => {
+            if (id === newNickName) {
+              console.log(value);
+            }
+          });
+          setImg(doc.data().myObj);
         }
       });
     });

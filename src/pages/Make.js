@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import html2canvas from "html2canvas";
 import { v4 as uuid4 } from "uuid";
 
@@ -20,6 +20,7 @@ import {
   updateDoc,
   arrayUnion,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "@firebase/storage";
 
@@ -28,7 +29,7 @@ import { ReactComponent as AvataImg } from "../assets/img/avata.svg";
 
 const Make = () => {
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
   const params = useParams();
   // params.id = useState
 
@@ -37,7 +38,7 @@ const Make = () => {
   const [url, setUrl] = useState("");
   console.log(url);
 
-  // const { nickName } = location.state;
+  const { Newid, NewnickName } = location.state;
 
   const naviPrev = () => {
     navigate(-1);
@@ -50,14 +51,15 @@ const Make = () => {
         state: {
           id: id,
           nickName: nickName,
+          isLoggedIn,
         },
       });
     } else {
       navigate("/Com", {
         state: {
-          id,
+          id: Newid,
           nickName,
-          url,
+          newNickName: NewnickName,
         },
       });
     }
@@ -145,7 +147,7 @@ const Make = () => {
 
     const quSnapshot = await getDocs(qu);
     quSnapshot.forEach((doc) => {
-      if (doc.id === id || doc.id === params.id) {
+      if (doc.id === id || doc.id === Newid) {
         setNickName(doc.data().userObj.nickName);
       }
     });
@@ -245,24 +247,23 @@ const Make = () => {
       const response = await uploadString(uriRef, uri, "data_url");
 
       url = await getDownloadURL(response.ref);
-      const L = url;
-      console.log(L);
-      setUrl(L);
-      console.log("실행돼?");
+
+      const docRef = doc(dbService, "users", Newid);
+
+      const docData = (await getDoc(docRef)).data();
+      console.log(docData.allObj);
+
+      const idx = docData.allObj.findIndex(
+        (item) => item.nickName === NewnickName
+      );
 
       const obj = {
-        url: url,
+        nickName: NewnickName,
         com: "",
+        uri: url,
       };
 
-      const docRef = doc(dbService, "users", `${params.id}`);
-      await setDoc(
-        docRef,
-        {
-          allObj: arrayUnion(obj),
-        },
-        { merge: true }
-      );
+      await updateDoc(docRef, { [`myObj.${NewnickName}`]: obj });
     }
   };
 

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Wel from "../pages/Welcome";
+import Nick from "../pages/NickName";
 import Make from "../pages/Make";
 import Comment from "../pages/Comment";
 import Done from "../pages/Done";
@@ -19,6 +20,8 @@ export default function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Wel" element={<Wel />} />
+        <Route path="/Nick" element={<Nick />} />
+        <Route path="/Nick/:id" element={<Nick />} />
         <Route path="/Make" element={<Make />} />
         <Route path="/Make/:id" element={<Make />} />
         <Route path="/Com" element={<Comment />} />
