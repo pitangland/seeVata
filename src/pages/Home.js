@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -6,8 +6,11 @@ import "../shared/theme.css";
 
 import main from "../assets/img/Main.png";
 import googleLogin from "../assets/img/googleLogin.png";
-import { authService } from "../service/fBase";
+import { authService, dbService } from "../service/fBase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+import { collection, query, getDocs } from "firebase/firestore";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,22 +19,60 @@ const Home = () => {
   const handleGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const data = await signInWithPopup(authService, provider);
-    // console.log(data.user.uid);
-    // console.log(data.user.displayName);
-
-    navigate("/Login");
   };
+
+  const [id, setId] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      setId(uid);
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  });
+
+  const getNickName = async () => {
+    const qu = query(collection(dbService, "users"));
+
+    const quSnapshot = await getDocs(qu);
+    quSnapshot.forEach((doc) => {
+      if (doc.id === id) {
+        setNickName(doc.data().userObj.nickName);
+      }
+    });
+  };
+
+  const onNext = () => {
+    if (isLoggedIn) {
+      navigate("/Main", {
+        state: {
+          id,
+          nickName,
+          isLoggedIn,
+        },
+      });
+    } else {
+      handleGoogle();
+      navigate("/Login");
+    }
+  };
+
+  useEffect(() => {
+    getNickName();
+  });
 
   return (
     <>
       <LogoImg src={main} alt="임시로고" />
       <LoginBtn>
         <LoginDes>구글 계정으로 간편 로그인</LoginDes>
-        <GoogleLoginImg
-          onClick={handleGoogle}
-          src={googleLogin}
-          alt="googleLogin"
-        />
+        <GoogleLoginImg onClick={onNext} src={googleLogin} alt="googleLogin" />
       </LoginBtn>
     </>
   );

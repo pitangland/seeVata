@@ -39,7 +39,8 @@ const Comment = () => {
     navigate("/Done", {
       state: {
         id,
-        newNickName: nickName,
+        newNickName: newNickName,
+        nickName: nickName,
       },
     });
   };

@@ -8,7 +8,13 @@ import BottomImg from "../assets/img/BottomImg.png";
 import Avata from "../components/features/Avata";
 
 import { dbService, authService } from "../service/fBase";
-import { collection, query, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  getDocs,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
 
 import { AiOutlineLeft } from "react-icons/ai";
 import { BsBoxArrowRight } from "react-icons/bs";
@@ -18,8 +24,8 @@ import "../shared/theme.css";
 const Main = () => {
   const location = useLocation();
 
-  const { id, nickName, img } = location.state;
-
+  const { id, nickName, isLoggedIn } = location.state;
+  console.log(isLoggedIn);
   const navigate = useNavigate();
 
   const onCopy = async () => {
@@ -44,36 +50,33 @@ const Main = () => {
     navigate("/");
   };
 
+  const onLogin = () => {
+    navigate("/");
+  };
+
   const [avata, setAvata] = useState([]);
 
   const getAvata = async () => {
     const q = query(collection(dbService, "users"));
 
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      if (doc.id === id) {
-        const data = {
-          ...doc.data().myObj,
-        };
-
-        Object.entries(data).map(([id, value]) => {
-          console.log(id, value);
-          Object.entries(value).map(([id, value]) => {
-            console.log(id, value);
-            setAvata(data);
-          });
-        });
+    const snap = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
         console.log(doc.data().myObj);
-        console.log(data);
-        // setAvata(...data);
-        // console.log(avata);
-      }
+        if (doc.id === id) {
+          const data = {
+            ...doc.data().myObj,
+          };
+          const avataArr = [...Object.values(data)];
+          setAvata(avataArr);
+        }
+      });
     });
+
+    return snap;
   };
 
   useEffect(() => {
     getAvata();
-    // console.log(avata);
   }, []);
 
   return (
@@ -84,15 +87,25 @@ const Main = () => {
           안녕하세요.
           <br /> {nickName}님의 seeVata입니다.
         </Title>
-        <BsBoxArrowRight onClick={onLogOutClick} />
+        {isLoggedIn ? <BsBoxArrowRight onClick={onLogOutClick} /> : null}
       </Head>
       <My>
-        {avata.map((doc) => (
-          <Avata key={doc.com} img={doc.url} com={doc.com} />
+        {Object.values(avata).map((doc) => (
+          <Avata
+            key={doc.com}
+            img={doc.uri}
+            com={doc.com}
+            nickName={doc.nickName}
+          />
         ))}
       </My>
       <Next>
-        <See onClick={onCopy}>친구들에게 seeVata를 요청하세요!</See>
+        {isLoggedIn ? (
+          <See onClick={onCopy}>친구들에게 seeVata를 요청하세요!</See>
+        ) : (
+          <See onClick={onLogin}>친구들에게 seeVata를 요청하세요!</See>
+        )}
+
         <MainAlt src={BottomImg} alt="BottomImg" />
       </Next>
     </>

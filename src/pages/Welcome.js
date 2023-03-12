@@ -27,12 +27,6 @@ const Welcome = () => {
     });
   };
 
-  // onAuthStateChanged(authService, async (user) => {
-  //   // Do something with user
-  //   // console.log(user.uid);
-  //   setId(user.uid);
-  // });
-
   const getNickName = async () => {
     const q = query(collection(dbService, "users"));
 

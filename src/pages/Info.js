@@ -12,7 +12,7 @@ import "../shared/theme.css";
 const Info = () => {
   const location = useLocation();
 
-  const { img, key, com } = location.state;
+  const { img, key, com, nickName } = location.state;
 
   console.log(com);
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Info = () => {
     <>
       <Head>
         <AiOutlineLeft onClick={naviPrev} />
-        <Title>000님의 seeVata</Title>
+        <Title>{nickName}님의 seeVata</Title>
       </Head>
       <Box>
         <Que src={img} alt="rabbit" />

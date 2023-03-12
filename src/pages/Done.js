@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
-import { collection, query, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 
 import "../shared/theme.css";
 
@@ -23,6 +23,7 @@ const Done = () => {
       state: {
         id,
         nickName,
+        isLoggedIn,
       },
     });
   };
@@ -36,17 +37,15 @@ const Done = () => {
 
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc.data().allObj);
         if (doc.id === id && isLoggedIn) {
           setImg(doc.data().userObj.uri);
         } else {
           const all = doc.data().myObj;
           Object.entries(all).map(([id, value]) => {
             if (id === newNickName) {
-              console.log(value);
+              setImg(value.uri);
             }
           });
-          setImg(doc.data().myObj);
         }
       });
     });

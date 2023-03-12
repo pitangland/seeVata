@@ -18,8 +18,6 @@ import {
   getDocs,
   doc,
   updateDoc,
-  arrayUnion,
-  setDoc,
   getDoc,
 } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "@firebase/storage";
