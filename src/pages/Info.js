@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import Logo from "../assets/img/logo.png";
-
-import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineLeft } from "react-icons/ai";
 import { MdMoveToInbox, MdModeEdit } from "react-icons/md";
 
 import "../shared/theme.css";
@@ -12,17 +10,34 @@ import "../shared/theme.css";
 const Info = () => {
   const location = useLocation();
 
-  const { img, key, com, nickName } = location.state;
+  const { img, key, com, nickName, isLoggedIn } = location.state;
 
-  console.log(com);
+  console.log(isLoggedIn);
+
   const navigate = useNavigate();
 
   const naviPrev = () => {
     navigate(-1);
   };
 
-  // authService === uid 이면 완성됐다고!
-  // 아니라면 친구꺼 만들어준 페이지 보여주기
+  const naviMake = () => {
+    navigate("/Make", {
+      state: {
+        id: key,
+        nickName,
+      },
+    });
+  };
+
+  const onSave = (url) => {
+    const download = document.createElement("a");
+
+    download.href = url;
+    download.setAttribute("download", `${nickName}`);
+    download.setAttribute("type", "image/png");
+    download.click();
+    download.remove();
+  };
 
   return (
     <>
@@ -34,12 +49,20 @@ const Info = () => {
         <Que src={img} alt="rabbit" />
       </Box>
       <Wrap>
-        <IconWrapper>
-          <MdModeEdit className="iconSize" />
-        </IconWrapper>
-        <IconWrapper>
-          <MdMoveToInbox className="iconSize" />
-        </IconWrapper>
+        {isLoggedIn ? (
+          <>
+            <IconWrapper onClick={naviMake}>
+              <MdModeEdit className="iconSize" />
+            </IconWrapper>
+            <IconWrapper onClick={() => onSave(img)}>
+              <MdMoveToInbox className="iconSize" />
+            </IconWrapper>
+          </>
+        ) : (
+          <IconWrapper onClick={() => onSave(img)}>
+            <MdMoveToInbox className="iconSize" />
+          </IconWrapper>
+        )}
       </Wrap>
       <Content>{com}</Content>
     </>
@@ -57,7 +80,7 @@ let Title = styled.div`
   width: 141px;
   height: 36px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -75,7 +98,7 @@ let Box = styled.div`
   width: 278px;
   height: 60vh;
 
-  background: #d9d9d9;
+  // background: #d9d9d9;
 `;
 
 let Que = styled.img`
@@ -114,16 +137,16 @@ let Content = styled.div`
   left: 41px;
   top: 666px;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 160%;
   /* or 24px */
 
   letter-spacing: -0.03em;
 
-  color: rgba(102, 102, 102, 0.5);
+  color: black;
 `;
 
 export default Info;

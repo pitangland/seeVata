@@ -2,19 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import Logo from "../assets/img/logo.png";
 import BottomImg from "../assets/img/BottomImg.png";
 
 import Avata from "../components/features/Avata";
 
 import { dbService, authService } from "../service/fBase";
-import {
-  collection,
-  query,
-  getDocs,
-  onSnapshot,
-  where,
-} from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 
 import { AiOutlineLeft } from "react-icons/ai";
 import { BsBoxArrowRight } from "react-icons/bs";
@@ -25,6 +18,7 @@ const Main = () => {
   const location = useLocation();
 
   const { id, nickName, isLoggedIn } = location.state;
+
   console.log(isLoggedIn);
   const navigate = useNavigate();
 
@@ -35,9 +29,7 @@ const Main = () => {
       );
       alert("클립보드에 링크가 복사되었습니다.");
     } catch (e) {
-      console.log(
-        "복사에 실패하였습니다. 새로고침 후 다시 시도해주시기 바랍니다."
-      );
+      alert("복사에 실패하였습니다. 새로고침 후 다시 시도해주시기 바랍니다.");
     }
   };
 
@@ -55,19 +47,20 @@ const Main = () => {
   };
 
   const [avata, setAvata] = useState([]);
+  const [myAvata, setMyAvata] = useState([]);
 
   const getAvata = async () => {
     const q = query(collection(dbService, "users"));
 
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc.data().myObj);
         if (doc.id === id) {
           const data = {
             ...doc.data().myObj,
           };
           const avataArr = [...Object.values(data)];
           setAvata(avataArr);
+          setMyAvata(doc.data().userObj);
         }
       });
     });
@@ -90,6 +83,12 @@ const Main = () => {
         {isLoggedIn ? <BsBoxArrowRight onClick={onLogOutClick} /> : null}
       </Head>
       <My>
+        <Avata
+          key={myAvata.id}
+          img={myAvata.uri}
+          nickName={myAvata.nickName}
+          isLoggedIn={isLoggedIn}
+        />
         {Object.values(avata).map((doc) => (
           <Avata
             key={doc.com}
@@ -123,11 +122,11 @@ let Title = styled.div`
   width: max-content;
   height: 36px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
-  line-height: 100%;
+  line-height: 130%;
 
   color: #272a33;
 `;
@@ -174,7 +173,7 @@ let See = styled.div`
   align-items: center;
   justify-content: center;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;

@@ -6,8 +6,6 @@ import NeckCom from "./neck";
 import GlassCom from "./glass";
 
 const Accessory = ({ accessory, getKey }) => {
-  // console.log(accessory);
-
   const hairArr = {
     ...accessory.hair,
   };
@@ -82,7 +80,7 @@ let Category = styled.div`
 
   z-index: 41;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;

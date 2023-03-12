@@ -26,7 +26,6 @@ const Login = () => {
     setNickName(value);
   };
 
-  // 닉네임 저장하는 것까지 성공 만약에 그 uid로 있으면 패스할 수 있게끔 해야함
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -104,8 +103,7 @@ let TitleDes = styled.div`
 
 let Title = styled.span`
   color: #ff6953;
-
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 26px;
@@ -124,7 +122,7 @@ let LoginDes = styled.div`
   margin-bottom: 0.5vh;
   // margin-left: 10vh;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -148,11 +146,13 @@ let LoginInput = styled.textarea`
   border: 1px solid #b1b1b1;
   border-radius: 6px;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 135%;
+
+  align-itme: center;
 
   &::-webkit-scrollbar {
     display: none;
@@ -175,7 +175,7 @@ let NextButton = styled.div`
   background: #272a33;
   border-radius: 6px;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 15px;

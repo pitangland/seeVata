@@ -2,20 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import Logo from "../assets/img/logo.png";
-
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
 import {
   doc,
-  setDoc,
   collection,
   query,
   getDocs,
   updateDoc,
   onSnapshot,
-  arrayUnion,
 } from "@firebase/firestore";
 
 import "../shared/theme.css";
@@ -55,11 +51,9 @@ const Comment = () => {
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((docs) => {
         const data = docs.data().myObj;
-        console.log(data);
         for (const key in data) {
           if (key === newNickName) {
             setUserUrl(data[key].uri);
-            console.log(data[key].uri);
           }
         }
       });
@@ -74,7 +68,6 @@ const Comment = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((docs) => {
       const data = docs.data().myObj;
-      console.log(data);
       for (const key in data) {
         if (key === newNickName) {
           updateDoc(doc(dbService, "users", id), {
@@ -104,6 +97,7 @@ const Comment = () => {
           row="3"
           maxLength={100}
           ref={comment}
+          placeholder="100글자만 쓸 수 있따"
           onChange={(e) => handleText(e)}
         ></TextSend>
         <TextLength>{myTypingNum.length}/100</TextLength>
@@ -126,7 +120,7 @@ let See = styled.div`
   background: #272a33;
   border-radius: 6px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -155,7 +149,7 @@ let Title = styled.div`
   width: 141px;
   height: 36px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -177,6 +171,8 @@ let TextBox = styled.div`
 `;
 
 let Text = styled.div`
+  margin-top: 6vh;
+
   position: position;
   display: inline;
 
@@ -185,7 +181,7 @@ let Text = styled.div`
   left: 140px;
   top: 512px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -197,6 +193,8 @@ let Text = styled.div`
 
 let TextSend = styled.textarea`
   display: -webkit-inline-box;
+
+  margin-top: 1vh;
 
   width: 326px;
   height: 120px;
@@ -223,7 +221,7 @@ let TextLength = styled.div`
   // display: flex;
   justify-content: flex-end;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

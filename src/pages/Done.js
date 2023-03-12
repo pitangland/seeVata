@@ -18,6 +18,8 @@ const Done = () => {
 
   const navigate = useNavigate();
 
+  console.log(isLoggedIn);
+
   const naviMain = () => {
     navigate("/Main", {
       state: {
@@ -38,6 +40,7 @@ const Done = () => {
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         if (doc.id === id && isLoggedIn) {
+          console.log(doc.data().userObj.uri);
           setImg(doc.data().userObj.uri);
         } else {
           const all = doc.data().myObj;
@@ -84,7 +87,7 @@ let See = styled.div`
   background: #272a33;
   border-radius: 6px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -113,12 +116,12 @@ let Top = styled.div`
 let Wel = styled.div`
   margin-top: 5vh;
 
-  width: 181px;
+  width: 100%;
   height: 52px;
   left: 105px;
   top: 129px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 20px;

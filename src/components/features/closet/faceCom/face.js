@@ -98,7 +98,7 @@ let Category = styled.div`
   top: 450px;
   z-index: 41;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;

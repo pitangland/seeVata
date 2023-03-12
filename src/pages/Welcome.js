@@ -10,7 +10,6 @@ import { dbService } from "../service/fBase";
 import { collection, query, getDocs } from "firebase/firestore";
 
 const Welcome = () => {
-  // const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
 
   const location = useLocation();
@@ -63,12 +62,12 @@ const Welcome = () => {
 let Wel = styled.div`
   margin-top: 22vh;
 
-  width: 264px;
+  width: 100%;
   height: 58px;
   left: 62px;
   top: 180px;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -86,7 +85,7 @@ let Title = styled.span`
   left: 62px;
   top: 180px;
 
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
@@ -107,7 +106,7 @@ let Next = styled.div`
 `;
 
 let Des = styled.div`
-  font-family: "Noto Sans KR";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -130,7 +129,7 @@ let StartBtn = styled.div`
   background: #000000;
   border-radius: 6px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 14px;

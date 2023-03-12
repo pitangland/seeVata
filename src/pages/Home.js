@@ -89,7 +89,7 @@ let LoginDes = styled.div`
   left: 129px;
   top: 642px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;

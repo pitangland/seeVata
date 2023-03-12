@@ -34,7 +34,6 @@ const Make = () => {
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
   const [url, setUrl] = useState("");
-  console.log(url);
 
   const { Newid, NewnickName } = location.state;
 
@@ -214,21 +213,10 @@ const Make = () => {
     html2canvas(document.getElementById("Div"), {
       useCORS: true,
     }).then(function (canvas) {
-      // 바로 저장가능..
-      // console.log(
-      //   canvas
-      //     .toDataURL("image/jpeg")
-      //     .replace("image/jpeg", "image/octet-stream")
-      // );
-      // console.log(canvas.toDataURL("image/png"));
-      // document.body.appendChild(canvas);
       onSave(canvas.toDataURL("image/png"));
     });
   };
 
-  // 저장하고 user => 저장까지
-  // authService.CurrentUser.uid = id와 같으면 userObj.uri에도 userObj.all에도 저장하고
-  // 아니면 userObj.all에 저장
   const onSave = async (uri) => {
     let url = "";
     if (isLoggedIn) {
@@ -268,8 +256,6 @@ const Make = () => {
   useEffect(() => {
     isLog();
     getCloset();
-
-    console.log(url);
   }, [id, nickName, isLoggedIn, url]);
 
   return (
@@ -398,7 +384,7 @@ let Title = styled.div`
   width: max-content;
   height: 36px;
 
-  font-family: "Roboto";
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -537,6 +523,8 @@ let Avata = styled.div`
 
   width: 120px;
   height: 250px;
+
+  // background-color: #c2c2c2;
 `;
 
 let Eye = styled.img`
@@ -571,7 +559,7 @@ let Top = styled.img`
   width: 117px;
   height: 245px;
 
-  z-index: 2;
+  z-index: 3;
 `;
 let Bottom = styled.img`
   position: absolute;
@@ -579,7 +567,7 @@ let Bottom = styled.img`
   width: 117px;
   height: 245px;
 
-  z-index: 3;
+  z-index: 2;
 `;
 let Onepiece = styled.img`
   position: absolute;

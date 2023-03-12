@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Avata = ({ key, img, com, nickName }) => {
+const Avata = ({ key, img, com, nickName, isLoggedIn }) => {
   const navigate = useNavigate();
 
   const naviInfo = () => {
@@ -12,11 +12,10 @@ const Avata = ({ key, img, com, nickName }) => {
         key,
         nickName,
         com,
+        isLoggedIn,
       },
     });
   };
-  console.log(com);
-  // useEffect(() => {}, []);
 
   return (
     <>
@@ -28,6 +27,7 @@ const Avata = ({ key, img, com, nickName }) => {
         com={com}
         className="item"
       />
+      {/* <div>{nickName}</div> */}
     </>
   );
 };
