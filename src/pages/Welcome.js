@@ -98,6 +98,9 @@ let Title = styled.span`
 
 let Que = styled.img`
   margin-top: 7vh;
+
+  width: 184px;
+  height: 197.33px;
 `;
 
 let Next = styled.div`

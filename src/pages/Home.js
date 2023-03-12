@@ -84,7 +84,7 @@ let LogoImg = styled.img`
 `;
 
 let LoginDes = styled.div`
-  width: 131px;
+  width: 100%;
   height: 14px;
   left: 129px;
   top: 642px;
@@ -102,7 +102,7 @@ let LoginDes = styled.div`
 `;
 
 let LoginBtn = styled.div`
-  width: 310px;
+  width: 100%;
   height: 56px;
   left: 40px;
   top: 668px;
@@ -116,6 +116,9 @@ let LoginBtn = styled.div`
 
 let GoogleLoginImg = styled.img`
   margin-top: 1vh;
+
+  width: 310px;
+  height: 70px;
 `;
 
 export default Home;

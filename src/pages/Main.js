@@ -102,7 +102,7 @@ const Main = () => {
         {isLoggedIn ? (
           <See onClick={onCopy}>친구들에게 seeVata를 요청하세요!</See>
         ) : (
-          <See onClick={onLogin}>친구들에게 seeVata를 요청하세요!</See>
+          <See onClick={onLogin}>나의 seeVata를 만들어보세요!</See>
         )}
 
         <MainAlt src={BottomImg} alt="BottomImg" />
@@ -112,14 +112,17 @@ const Main = () => {
 };
 
 let Head = styled.div`
+  width: 342.95px;
+
   display: flex;
   align-items: baseline;
   flex-direction: row;
 `;
 
 let Title = styled.div`
-  margin: 6.5vh 6.5vh 1vh 6.5vh;
+  margin: 6.5vh 0 1vh 0;
   width: max-content;
+  width: 100%;
   height: 36px;
 
   font-family: "Noto Sans KR", sans-serif;
@@ -139,13 +142,6 @@ let My = styled.div`
   // padding: 15px;
   margin-top: 5vh;
   gap: 50px;
-`;
-
-let Que = styled.img`
-  width: 197px;
-  height: 411px;
-
-  margin-top: 7vh;
 `;
 
 let Next = styled.div`

@@ -78,8 +78,10 @@ const Login = () => {
 };
 
 let Top = styled.div`
+  display: flex;
+  width: 100%;
   margin-top: 6.5vh;
-  margin-right: 33vh;
+  // margin-right: 33vh;
 `;
 
 let TitleDes = styled.div`
