@@ -123,7 +123,7 @@ let See = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 16px;
   text-align: center;
 
@@ -139,14 +139,16 @@ let See = styled.div`
 `;
 
 let Head = styled.div`
+  width: 342.95px;
+
   display: flex;
   align-items: baseline;
   flex-direction: row;
 `;
 
 let Title = styled.div`
-  margin: 6.5vh 6.5vh 1vh 6.5vh;
-  width: 141px;
+  margin: 6.5vh 1vh 1vh 9vh;
+  width: max-content;
   height: 36px;
 
   font-family: "Noto Sans KR", sans-serif;
@@ -160,31 +162,23 @@ let Title = styled.div`
 
 let TextBox = styled.div`
   margin-top: 5vh;
+  padding-top: 1.5vh;
 
   width: 342px;
-  height: 170px;
-  left: 24px;
-  top: 499px;
+  height: 180px;
 
   background: #000000;
   border-radius: 14px;
 `;
 
 let Text = styled.div`
-  margin-top: 6vh;
-
   position: position;
   display: inline;
-
-  width: 109px;
-  height: 16px;
-  left: 140px;
-  top: 512px;
 
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 16px;
   text-align: center;
 
@@ -194,15 +188,23 @@ let Text = styled.div`
 let TextSend = styled.textarea`
   display: -webkit-inline-box;
 
-  margin-top: 1vh;
+  padding: 15px 12px;
 
-  width: 326px;
-  height: 120px;
-  left: 32px;
-  top: 541px;
+  box-sizing: border-box;
+
+  margin-top: 2vh;
+
+  width: 320px;
+  height: 122px;
 
   background: #ffffff;
   border-radius: 8px;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 135%;
 
   &::-webkit-scrollbar {
     display: none;
@@ -234,14 +236,6 @@ let TextLength = styled.div`
   border: 1px solid red;
 
   opacity: 0.4;
-`;
-
-let Success = styled.div`
-  width: 56px;
-  height: 28px;
-
-  border: 2px solid #000000;
-  border-radius: 40px;
 `;
 
 let Que = styled.img`

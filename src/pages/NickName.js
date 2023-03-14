@@ -52,7 +52,7 @@ const NickName = () => {
     <>
       <Top></Top>
       <TitleDes>
-        내 <Title>seeVata</Title> 이름을
+        친구의 <Title>seeVata</Title> 이름을
         <br />
         만들어주세요
       </TitleDes>
@@ -78,7 +78,7 @@ let Top = styled.div`
 
 let TitleDes = styled.div`
   margin-top: 5vh;
-  margin-right: 15vh;
+  margin-right: 98px;
 
   height: 67px;
   left: 23px;
@@ -109,13 +109,11 @@ let Title = styled.span`
 
 let Nick = styled.div`
   text-align: left;
-  // margin-right: 15vh;
 `;
 
 let LoginDes = styled.div`
   margin-top: 4vh;
   margin-bottom: 0.5vh;
-  // margin-left: 10vh;
 
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
@@ -131,12 +129,12 @@ let LoginDes = styled.div`
 let LoginInput = styled.textarea`
   margin-bottom: 2vh;
 
+  padding: 12px 12px;
+
   box-sizing: border-box;
 
   width: 342px;
   height: 50px;
-  left: 25px;
-  top: 267px;
 
   border: 1px solid #b1b1b1;
   border-radius: 6px;
@@ -146,6 +144,8 @@ let LoginInput = styled.textarea`
   font-weight: 400;
   font-size: 15px;
   line-height: 135%;
+
+  align-item: center;
 
   &::-webkit-scrollbar {
     display: none;

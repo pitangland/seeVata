@@ -15,12 +15,6 @@ import { collection, query, getDocs } from "firebase/firestore";
 const Home = () => {
   const navigate = useNavigate();
 
-  // google
-  const handleGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    const data = await signInWithPopup(authService, provider);
-  };
-
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +31,11 @@ const Home = () => {
     }
   });
 
+  const handleGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    const data = await signInWithPopup(authService, provider);
+  };
+
   const getNickName = async () => {
     const qu = query(collection(dbService, "users"));
 
@@ -49,7 +48,10 @@ const Home = () => {
   };
 
   const onNext = () => {
+    handleGoogle();
+
     if (isLoggedIn) {
+      console.log("로그인 했었다니까?");
       navigate("/Main", {
         state: {
           id,
@@ -58,14 +60,14 @@ const Home = () => {
         },
       });
     } else {
-      handleGoogle();
+      console.log("로그인 안했었음");
       navigate("/Login");
     }
   };
 
   useEffect(() => {
     getNickName();
-  });
+  }, [isLoggedIn]);
 
   return (
     <>

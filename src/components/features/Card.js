@@ -48,7 +48,7 @@ let ImgCard = styled.img`
   width: 100px;
   height: 100px;
 
-  background: #f0f1f3;
+  background: #ffffff;
   border-radius: 18px;
 
   &: hover {

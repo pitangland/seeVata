@@ -6,8 +6,9 @@ import BottomImg from "../assets/img/BottomImg.png";
 
 import Avata from "../components/features/Avata";
 
-import { dbService, authService } from "../service/fBase";
+import { dbService } from "../service/fBase";
 import { collection, query, onSnapshot } from "firebase/firestore";
+import { getAuth, signOut } from "firebase/auth";
 
 import { AiOutlineLeft } from "react-icons/ai";
 import { BsBoxArrowRight } from "react-icons/bs";
@@ -38,8 +39,14 @@ const Main = () => {
   };
 
   const onLogOutClick = () => {
-    authService.signOut();
-    navigate("/");
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const onLogin = () => {
@@ -83,12 +90,14 @@ const Main = () => {
         {isLoggedIn ? <BsBoxArrowRight onClick={onLogOutClick} /> : null}
       </Head>
       <My>
-        <Avata
-          key={myAvata.id}
-          img={myAvata.uri}
-          nickName={myAvata.nickName}
-          isLoggedIn={isLoggedIn}
-        />
+        <div>
+          <Avata
+            key={myAvata.id}
+            img={myAvata.uri}
+            nickName={myAvata.nickName}
+            isLoggedIn={isLoggedIn}
+          />
+        </div>
         {Object.values(avata).map((doc) => (
           <Avata
             key={doc.com}
@@ -135,13 +144,27 @@ let Title = styled.div`
 `;
 
 let My = styled.div`
-  // border: 1px solid;
+  width: 271px;
+
+  border: 1px solid;
   display: grid;
-  grid-template-rows: repeat(3, 160px);
-  grid-template-columns: repeat(3, 50px);
-  // padding: 15px;
-  margin-top: 5vh;
-  gap: 50px;
+  grid-template-rows: repeat(3, 185px);
+  grid-template-columns: repeat(3, 55px);
+
+  margin-top: 4.5vh;
+  gap: 0px 49px;
+
+  height: 66vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > *:nth-of-type(3n + 1),
+  & > *:nth-of-type(3n + 3) {
+    align-self: end;
+  }
 `;
 
 let Next = styled.div`
@@ -172,7 +195,7 @@ let See = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 16px;
   text-align: center;
 
@@ -185,7 +208,7 @@ let See = styled.div`
 
 let MainAlt = styled.img`
   position: fixed;
-  width: 100%;
+  width: 390px;
   bottom: 0;
 
   z-index: 0;

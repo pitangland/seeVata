@@ -70,7 +70,7 @@ let Category = styled.div`
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
-  margin: 2vh;
+  margin: 2vh 0 0 3.5vh;
   gap: 24px;
 
   width: 263px;
@@ -99,6 +99,8 @@ let Closet = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  background-color: #f0f1f3;
 `;
 
 export default Accessory;

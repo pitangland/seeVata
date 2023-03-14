@@ -114,7 +114,6 @@ let Des = styled.div`
   font-weight: 500;
   font-size: 12px;
   line-height: 100%;
-  /* identical to box height, or 12px */
 
   text-align: center;
 
@@ -135,7 +134,7 @@ let StartBtn = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 16px;
   text-align: center;
 

@@ -261,9 +261,21 @@ const Make = () => {
   return (
     <>
       <Head>
-        <AiOutlineLeft onClick={naviPrev} />
-        <Title>{nickName}님의 seeVata</Title>
-        {isFace ? null : <Success onClick={naviDone}>완성</Success>}
+        {isFace ? (
+          <>
+            <AiOutlineLeft onClick={naviPrev} />
+            <Title>{nickName}님의 seeVata</Title>
+            <Success onClick={naviDone} className="face">
+              &nbsp;&nbsp;
+            </Success>
+          </>
+        ) : (
+          <>
+            <AiOutlineLeft onClick={naviPrev} />
+            <Title>{nickName}님의 seeVata</Title>
+            <Success onClick={naviDone}>완성</Success>
+          </>
+        )}
       </Head>
       {isFace ? (
         <>
@@ -374,14 +386,16 @@ const Make = () => {
 };
 
 let Head = styled.div`
+  // width: 100%;
+
   display: flex;
   align-items: baseline;
   flex-direction: row;
 `;
 
 let Title = styled.div`
-  margin: 6.5vh 6.5vh 1vh 6.5vh;
-  width: max-content;
+  // margin: 6.5vh 6.5vh 1vh 8vh;
+  margin: 6.5vh 2vh 1vh 7vh;
   height: 36px;
 
   font-family: "Noto Sans KR", sans-serif;
@@ -390,6 +404,8 @@ let Title = styled.div`
   font-size: 18px;
   line-height: 100%;
 
+  text-align: center;
+
   color: #272a33;
 `;
 
@@ -397,8 +413,21 @@ let Success = styled.div`
   width: 56px;
   height: 28px;
 
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 170%;
+
   border: 2px solid #000000;
   border-radius: 40px;
+
+  box-sizing: border-box;
+
+  &.face {
+    border: 2px white;
+    border-radius: 40px;
+  }
 `;
 
 let Category = styled.div`
@@ -407,7 +436,7 @@ let Category = styled.div`
   align-items: flex-start;
 
   margin-top: 3vh;
-  margin-left: -130px;
+  margin-right: 147px;
   margin-bottom: 8px;
 
   z-index: 40;
@@ -423,15 +452,16 @@ let Face = styled.div`
   width: 64px;
   height: 28px;
 
-  background: #d9d9d9;
+  background: #f4f4f4;
   border-radius: 40px;
-  opacity: 0.3;
 
   font-size: 12px;
   font-weight: 700;
+  color: #bebfc2;
 
   &: hover {
-    opacity: 1;
+    color: #ffffff;
+    background: #272a33;
   }
 `;
 
@@ -445,15 +475,16 @@ let Cloth = styled.div`
   width: 64px;
   height: 28px;
 
-  background: #d9d9d9;
+  background: #f4f4f4;
   border-radius: 40px;
-  opacity: 0.3;
 
   font-size: 12px;
   font-weight: 700;
+  color: #bebfc2;
 
   &: hover {
-    opacity: 1;
+    color: #ffffff;
+    background: #272a33;
   }
 `;
 
@@ -466,15 +497,16 @@ let Access = styled.div`
   width: 64px;
   height: 28px;
 
-  background: #d9d9d9;
+  background: #f4f4f4;
   border-radius: 40px;
-  opacity: 0.3;
 
   font-size: 12px;
   font-weight: 700;
+  color: #bebfc2;
 
   &: hover {
-    opacity: 1;
+    color: #ffffff;
+    background: #272a33;
   }
 `;
 
@@ -487,7 +519,7 @@ let Closet = styled.div`
   left 1px;
   top: 431px;
 
-  background: #ffffff;
+  background-color: #f0f1f3;
   z-index: 40;
 `;
 
@@ -597,7 +629,7 @@ let Hair = styled.img`
 let Neck = styled.img`
   position: absolute;
 
-  z-index: 2;
+  z-index: 3;
 
   width: 117px;
   height: 245px;

@@ -19,40 +19,52 @@ const Avata = ({ key, img, com, nickName, isLoggedIn }) => {
 
   return (
     <>
-      <ImgCard
-        onClick={naviInfo}
-        src={img}
-        alt={"avata"}
-        key={key}
-        com={com}
-        className="item"
-      />
-      {/* <div>{nickName}</div> */}
+      <Con>
+        <ImgCard
+          onClick={naviInfo}
+          src={img}
+          alt={"avata"}
+          key={key}
+          com={com}
+          className="item"
+        />
+        <Des>{nickName}</Des>
+      </Con>
     </>
   );
 };
 
 export default Avata;
 
+let Con = styled.div``;
+
 let ImgCard = styled.img`
-  width: 56px;
-  height: 117px;
+  width: 62px;
+  height: 129px;
+`;
 
-  background: #f0f1f3;
-  border-radius: 18px;
+let Des = styled.div`
+  border: 1px solid;
 
-  // &: hover {
-  //   width: 93px;
-  //   height: 93px;
-  //   border: 3px solid #000000;
-  // }
+  background: #f4f4f4;
+  border-radius: 40px;
 
-  &:nth-child(1),
-  &:nth-child(3),
-  &:nth-child(4),
-  &:nth-child(6),
-  &:nth-child(7),
-  &:nth-child(9) {
-    align-self: end;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 8px;
+
+  width: max-content;
+  height: 18px;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 130%;
+
+  text-align: center;
+
+  color: #505050;
 `;

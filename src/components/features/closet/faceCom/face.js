@@ -89,7 +89,7 @@ let Category = styled.div`
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
-  margin: 2vh;
+  margin: 2vh 0 0 3.5vh;
   gap: 24px;
 
   width: 263px;
@@ -105,6 +105,8 @@ let Category = styled.div`
   line-height: 100%;
 
   color: #272a33;
+
+  // background-color: #f0f1f3;
 `;
 
 let Color = styled.div``;
@@ -120,7 +122,7 @@ let Closet = styled.div`
     display: none;
   }
 
-  background-color: #ffffff;
+  background-color: #f0f1f3;
 `;
 
 export default Face;

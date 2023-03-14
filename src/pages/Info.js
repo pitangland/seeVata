@@ -36,7 +36,6 @@ const Info = () => {
     download.setAttribute("download", `${nickName}`);
     download.setAttribute("type", "image/png");
     download.click();
-    download.remove();
   };
 
   return (
@@ -77,7 +76,7 @@ let Head = styled.div`
 
 let Title = styled.div`
   margin: 6.5vh 6.5vh 1vh 8vh;
-  width: 141px;
+  width: max-content;
   height: 36px;
 
   font-family: "Noto Sans KR", sans-serif;

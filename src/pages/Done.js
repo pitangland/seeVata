@@ -7,6 +7,8 @@ import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
 import { dbService } from "../service/fBase";
 import { collection, query, onSnapshot } from "firebase/firestore";
 
+import test from "../assets/img/QueRabbit.png";
+
 import "../shared/theme.css";
 
 const Done = () => {
@@ -63,13 +65,13 @@ const Done = () => {
     <>
       <Top>
         <AiOutlineLeft onClick={naviPrev} />
-        <AiOutlineClose onClick={naviMain} />
       </Top>
       <Wel>
         {nickName}님의 seeVata가 <br />
         완성됐어요!
       </Wel>
-      <Que src={img} alt="rabbit" />
+      {img !== null ? <Que src={img} alt="rabbit" /> : <Que src={test}></Que>}
+
       <Next>
         <See onClick={naviMain}>{nickName}님의 방보기</See>
       </Next>
@@ -90,7 +92,7 @@ let See = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 16px;
   text-align: center;
 
@@ -106,7 +108,7 @@ let See = styled.div`
 `;
 
 let Top = styled.div`
-  width: 300px;
+  width: 326px;
   margin: 6.5vh 6.5vh 1vh 6.5vh;
   display: flex;
   justify-content: space-between;
