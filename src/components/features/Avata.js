@@ -36,7 +36,11 @@ const Avata = ({ key, img, com, nickName, isLoggedIn }) => {
 
 export default Avata;
 
-let Con = styled.div``;
+let Con = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 let ImgCard = styled.img`
   width: 62px;
@@ -44,8 +48,6 @@ let ImgCard = styled.img`
 `;
 
 let Des = styled.div`
-  border: 1px solid;
-
   background: #f4f4f4;
   border-radius: 40px;
 

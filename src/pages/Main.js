@@ -4,10 +4,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import BottomImg from "../assets/img/BottomImg.png";
 
-import Avata from "../components/features/Avata";
+import Pagination from "../components/features/Pagination";
 
 import { dbService } from "../service/fBase";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, getDocs } from "firebase/firestore";
 import { getAuth, signOut } from "firebase/auth";
 
 import { AiOutlineLeft } from "react-icons/ai";
@@ -20,7 +20,6 @@ const Main = () => {
 
   const { id, nickName, isLoggedIn } = location.state;
 
-  console.log(isLoggedIn);
   const navigate = useNavigate();
 
   const onCopy = async () => {
@@ -58,21 +57,20 @@ const Main = () => {
 
   const getAvata = async () => {
     const q = query(collection(dbService, "users"));
+    const querySnapshot = await getDocs(q);
+    const avataArr = [];
 
-    const snap = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        if (doc.id === id) {
-          const data = {
-            ...doc.data().myObj,
-          };
-          const avataArr = [...Object.values(data)];
-          setAvata(avataArr);
-          setMyAvata(doc.data().userObj);
-        }
-      });
+    querySnapshot.forEach((doc) => {
+      if (doc.id === id) {
+        const data = {
+          ...doc.data().myObj,
+        };
+        const newAvataArr = [...Object.values(data)];
+        avataArr.push(...newAvataArr);
+        setMyAvata(doc.data().userObj);
+      }
     });
-
-    return snap;
+    setAvata(avataArr);
   };
 
   useEffect(() => {
@@ -89,24 +87,9 @@ const Main = () => {
         </Title>
         {isLoggedIn ? <BsBoxArrowRight onClick={onLogOutClick} /> : null}
       </Head>
-      <My>
-        <div>
-          <Avata
-            key={myAvata.id}
-            img={myAvata.uri}
-            nickName={myAvata.nickName}
-            isLoggedIn={isLoggedIn}
-          />
-        </div>
-        {Object.values(avata).map((doc) => (
-          <Avata
-            key={doc.com}
-            img={doc.uri}
-            com={doc.com}
-            nickName={doc.nickName}
-          />
-        ))}
-      </My>
+
+      <Pagination avata={avata} myAvata={myAvata} isLoggedIn={isLoggedIn} />
+
       <Next>
         {isLoggedIn ? (
           <See onClick={onCopy}>친구들에게 seeVata를 요청하세요!</See>
@@ -143,34 +126,12 @@ let Title = styled.div`
   color: #272a33;
 `;
 
-let My = styled.div`
-  width: 271px;
-
-  border: 1px solid;
-  display: grid;
-  grid-template-rows: repeat(3, 185px);
-  grid-template-columns: repeat(3, 55px);
-
-  margin-top: 4.5vh;
-  gap: 0px 49px;
-
-  height: 66vh;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  & > *:nth-of-type(3n + 1),
-  & > *:nth-of-type(3n + 3) {
-    align-self: end;
-  }
-`;
-
 let Next = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin-top: 2.5vh;
 
   position: relative;
 
