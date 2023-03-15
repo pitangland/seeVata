@@ -38,8 +38,6 @@ const Manager = () => {
         attachment,
         "data_url"
       );
-      // 이미지 url 다운로드 받는 법
-      console.log(await getDownloadURL(response.ref));
 
       attachmentUrl = await getDownloadURL(response.ref);
     }

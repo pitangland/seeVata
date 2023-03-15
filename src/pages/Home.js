@@ -51,7 +51,6 @@ const Home = () => {
     handleGoogle();
 
     if (isLoggedIn) {
-      console.log("로그인 했었다니까?");
       navigate("/Main", {
         state: {
           id,
@@ -60,7 +59,6 @@ const Home = () => {
         },
       });
     } else {
-      console.log("로그인 안했었음");
       navigate("/Login");
     }
   };

@@ -237,7 +237,6 @@ const Make = () => {
       const docRef = doc(dbService, "users", Newid);
 
       const docData = (await getDoc(docRef)).data();
-      console.log(docData.allObj);
 
       const idx = docData.allObj.findIndex(
         (item) => item.nickName === NewnickName

@@ -12,8 +12,6 @@ const Info = () => {
 
   const { img, key, com, nickName, isLoggedIn } = location.state;
 
-  console.log(isLoggedIn);
-
   const navigate = useNavigate();
 
   const naviPrev = () => {

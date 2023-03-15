@@ -7,8 +7,6 @@ const Card = ({ img, id, getKey, isColor }) => {
   const onClick = (key) => {
     setIsKey(!isKey);
 
-    console.log(isKey);
-
     if (isKey) getKey(key.target.id);
     else getKey(key.target.id.toUpperCase());
   };

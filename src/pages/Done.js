@@ -20,8 +20,6 @@ const Done = () => {
 
   const navigate = useNavigate();
 
-  console.log(isLoggedIn);
-
   const naviMain = () => {
     navigate("/Main", {
       state: {
@@ -42,7 +40,6 @@ const Done = () => {
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         if (doc.id === id && isLoggedIn) {
-          console.log(doc.data().userObj.uri);
           setImg(doc.data().userObj.uri);
         } else {
           const all = doc.data().myObj;

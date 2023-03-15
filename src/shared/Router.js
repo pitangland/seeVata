@@ -15,7 +15,7 @@ import Manager from "../pages/Manager";
 
 export default function Router() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
