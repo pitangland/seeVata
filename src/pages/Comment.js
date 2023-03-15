@@ -220,7 +220,6 @@ let TextLength = styled.div`
 
   margin-bottom: 10vh;
 
-  // display: flex;
   justify-content: flex-end;
 
   font-family: "Noto Sans KR", sans-serif;
@@ -231,7 +230,6 @@ let TextLength = styled.div`
 
   text-align: right;
 
-  // color: #272a33;
   color: red;
   border: 1px solid red;
 

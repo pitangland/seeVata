@@ -83,7 +83,6 @@ const Accessory = ({ accessory, getKey }) => {
 };
 
 let Category = styled.div`
-  //   border: 1px solid;
   display: flex;
   flex-direction: row;
   align-items: flex-start;

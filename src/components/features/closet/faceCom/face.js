@@ -108,7 +108,6 @@ const Face = ({ face, getKey }) => {
 };
 
 let Category = styled.div`
-  //   border: 1px solid;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -129,8 +128,6 @@ let Category = styled.div`
   line-height: 100%;
 
   color: #272a33;
-
-  // background-color: #f0f1f3;
 `;
 
 let Color = styled.div`

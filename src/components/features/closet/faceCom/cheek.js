@@ -16,7 +16,6 @@ const cheek = ({ cheek, getKey }) => {
 };
 
 let Category = styled.div`
-  //   border: 1px solid;
   display: grid;
   grid-template-columns: repeat(3, 3fr);
   flex-direction: row;

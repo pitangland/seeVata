@@ -94,8 +94,6 @@ let Box = styled.div`
 
   width: 278px;
   height: 60vh;
-
-  // background: #d9d9d9;
 `;
 
 let Que = styled.img`

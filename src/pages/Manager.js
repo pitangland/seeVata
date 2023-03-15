@@ -24,7 +24,6 @@ const Manager = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      //   setNweets(nweetArray);
     });
   }, []);
 

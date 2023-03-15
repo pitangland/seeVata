@@ -29,7 +29,6 @@ const Make = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  // params.id = useState
 
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
