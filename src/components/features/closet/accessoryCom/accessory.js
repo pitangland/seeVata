@@ -45,9 +45,27 @@ const Accessory = ({ accessory, getKey }) => {
   return (
     <>
       <Category>
-        <Hair onClick={hairModal}>머리</Hair>
-        <Neck onClick={neckModal}>목걸이</Neck>
-        <Glass onClick={glassModal}>안경</Glass>
+        {isHair ? (
+          <Hair onClick={hairModal} className="hover">
+            머리
+          </Hair>
+        ) : (
+          <Hair onClick={hairModal}>머리</Hair>
+        )}
+        {isNeck ? (
+          <Neck onClick={neckModal} className="hover">
+            목걸이
+          </Neck>
+        ) : (
+          <Neck onClick={neckModal}>목걸이</Neck>
+        )}
+        {isGlass ? (
+          <Glass onClick={glassModal} className="hover">
+            안경
+          </Glass>
+        ) : (
+          <Glass onClick={glassModal}>안경</Glass>
+        )}
       </Category>
       <Closet>
         {isHair ? (
@@ -88,9 +106,21 @@ let Category = styled.div`
 
   color: #272a33;
 `;
-let Hair = styled.div``;
-let Neck = styled.div``;
-let Glass = styled.div``;
+let Hair = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Neck = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Glass = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
 
 let Closet = styled.div`
   height: 45vh;

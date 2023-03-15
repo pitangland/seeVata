@@ -25,7 +25,7 @@ const Main = () => {
   const onCopy = async () => {
     try {
       await navigator.clipboard.writeText(
-        `https://pitangland.github.io/seeVata/Nick/${id}`
+        `https://seevata.swygbro.com/Nick/${id}`
       );
       alert("클립보드에 링크가 복사되었습니다.");
     } catch (e) {

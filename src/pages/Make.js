@@ -360,9 +360,27 @@ const Make = () => {
       )}
 
       <Category>
-        <Face onClick={faceModal}>얼굴</Face>
-        <Cloth onClick={clothModal}>옷</Cloth>
-        <Access onClick={accessoryModal}>악세사리</Access>
+        {isFace ? (
+          <Face onClick={faceModal} className="hover">
+            얼굴
+          </Face>
+        ) : (
+          <Face onClick={faceModal}>얼굴</Face>
+        )}
+        {isCloth ? (
+          <Cloth onClick={clothModal} className="hover">
+            옷
+          </Cloth>
+        ) : (
+          <Cloth onClick={clothModal}>옷</Cloth>
+        )}
+        {isAccessory ? (
+          <Access onClick={accessoryModal} className="hover">
+            악세사리
+          </Access>
+        ) : (
+          <Access onClick={accessoryModal}>악세사리</Access>
+        )}
       </Category>
 
       <Closet>
@@ -385,15 +403,12 @@ const Make = () => {
 };
 
 let Head = styled.div`
-  // width: 100%;
-
   display: flex;
   align-items: baseline;
   flex-direction: row;
 `;
 
 let Title = styled.div`
-  // margin: 6.5vh 6.5vh 1vh 8vh;
   margin: 6.5vh 2vh 1vh 7vh;
   height: 36px;
 
@@ -442,7 +457,6 @@ let Category = styled.div`
 `;
 
 let Face = styled.div`
-  // border: 1px solid;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -458,14 +472,13 @@ let Face = styled.div`
   font-weight: 700;
   color: #bebfc2;
 
-  &: hover {
+  &.hover {
     color: #ffffff;
     background: #272a33;
   }
 `;
 
 let Cloth = styled.div`
-  // border: 1px solid;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -481,14 +494,13 @@ let Cloth = styled.div`
   font-weight: 700;
   color: #bebfc2;
 
-  &: hover {
+  &.hover {
     color: #ffffff;
     background: #272a33;
   }
 `;
 
 let Access = styled.div`
-  // border: 1px solid;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -503,7 +515,7 @@ let Access = styled.div`
   font-weight: 700;
   color: #bebfc2;
 
-  &: hover {
+  &.hover {
     color: #ffffff;
     background: #272a33;
   }
@@ -534,18 +546,6 @@ let animationBig = keyframes`
 }
 `;
 
-let animationSmall = keyframes`
-0% {
-  transform: scale(1,1);
-}
-50%{
-  transform: scale(1.25,1.25) translate(0, 20px);
-}
-100%{
-  transform: scale(1.8,1.8) translate(0, 50px);
-}
-`;
-
 let Avata = styled.div`
   position: relative;
   &.aniBig {
@@ -554,8 +554,6 @@ let Avata = styled.div`
 
   width: 120px;
   height: 250px;
-
-  // background-color: #c2c2c2;
 `;
 
 let Eye = styled.img`

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { AiOutlineLeft, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineLeft } from "react-icons/ai";
 
 import { dbService } from "../service/fBase";
 import { collection, query, onSnapshot } from "firebase/firestore";
 
-import test from "../assets/img/QueRabbit.png";
+import loading from "../assets/img/loading.png";
 
 import "../shared/theme.css";
 
@@ -67,7 +67,11 @@ const Done = () => {
         {nickName}님의 seeVata가 <br />
         완성됐어요!
       </Wel>
-      {img !== null ? <Que src={img} alt="rabbit" /> : <Que src={test}></Que>}
+      {img !== null ? (
+        <Que src={img} alt="rabbit" />
+      ) : (
+        <Que src={loading}></Que>
+      )}
 
       <Next>
         <See onClick={naviMain}>{nickName}님의 방보기</See>

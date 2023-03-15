@@ -59,10 +59,34 @@ const Cloth = ({ cloth, getKey }) => {
   return (
     <>
       <Category>
-        <Top onClick={topModal}>상의</Top>
-        <Bottom onClick={bottomModal}>하의</Bottom>
-        <Onepiece onClick={onepieceModal}>원피스</Onepiece>
-        <Outer onClick={OuterModal}>외투</Outer>
+        {isTop ? (
+          <Top onClick={topModal} className="hover">
+            상의
+          </Top>
+        ) : (
+          <Top onClick={topModal}>상의</Top>
+        )}
+        {isBottom ? (
+          <Bottom onClick={bottomModal} className="hover">
+            하의
+          </Bottom>
+        ) : (
+          <Bottom onClick={bottomModal}>하의</Bottom>
+        )}
+        {isOnepiece ? (
+          <Onepiece onClick={onepieceModal} className="hover">
+            원피스
+          </Onepiece>
+        ) : (
+          <Onepiece onClick={onepieceModal}>원피스</Onepiece>
+        )}
+        {isOuter ? (
+          <Outer onClick={OuterModal} className="hover">
+            외투
+          </Outer>
+        ) : (
+          <Outer onClick={OuterModal}>외투</Outer>
+        )}
       </Category>
 
       <Closet>
@@ -115,10 +139,26 @@ let Category = styled.div`
   color: #272a33;
 `;
 
-let Top = styled.div``;
-let Bottom = styled.div``;
-let Onepiece = styled.div``;
-let Outer = styled.div``;
+let Top = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Bottom = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Onepiece = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Outer = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
 
 let Closet = styled.div`
   height: 45vh;

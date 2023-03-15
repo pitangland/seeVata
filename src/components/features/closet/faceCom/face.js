@@ -59,10 +59,34 @@ const Face = ({ face, getKey }) => {
   return (
     <>
       <Category>
-        <Color onClick={colorModal}>피부색</Color>
-        <Eye onClick={eyeModal}>눈</Eye>
-        <Mouth onClick={mouthModal}>코입</Mouth>
-        <Cheek onClick={cheekModal}>볼</Cheek>
+        {isColor ? (
+          <Color onClick={colorModal} className="hover">
+            피부색
+          </Color>
+        ) : (
+          <Color onClick={colorModal}>피부색</Color>
+        )}
+        {isEye ? (
+          <Eye onClick={eyeModal} className="hover">
+            눈
+          </Eye>
+        ) : (
+          <Eye onClick={eyeModal}>눈</Eye>
+        )}
+        {isMouth ? (
+          <Mouth onClick={mouthModal} className="hover">
+            코입
+          </Mouth>
+        ) : (
+          <Mouth onClick={mouthModal}>코입</Mouth>
+        )}
+        {isCheek ? (
+          <Cheek onClick={cheekModal} className="hover">
+            볼
+          </Cheek>
+        ) : (
+          <Cheek onClick={cheekModal}>볼</Cheek>
+        )}
       </Category>
 
       <Closet>
@@ -109,10 +133,26 @@ let Category = styled.div`
   // background-color: #f0f1f3;
 `;
 
-let Color = styled.div``;
-let Eye = styled.div``;
-let Mouth = styled.div``;
-let Cheek = styled.div``;
+let Color = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Eye = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Mouth = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
+let Cheek = styled.div`
+  &.hover {
+    text-decoration-line: underline;
+  }
+`;
 
 let Closet = styled.div`
   height: 46.5vh;
