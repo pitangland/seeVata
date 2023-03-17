@@ -625,7 +625,7 @@ let Hair = styled.img`
 let Neck = styled.img`
   position: absolute;
 
-  z-index: 3;
+  z-index: 5;
 
   width: 117px;
   height: 245px;
