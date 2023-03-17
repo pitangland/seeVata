@@ -36,17 +36,10 @@ const Done = () => {
 
   const getImg = async () => {
     const q = query(collection(dbService, "users"));
-    console.log(isLoggedIn);
-    console.log(id);
 
     const snap = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log(doc);
-        console.log(doc.id);
         if (doc.id === id && isLoggedIn) {
-          console.log(doc.id);
-          console.log(id);
-          console.log(isLoggedIn);
           setImg(doc.data().userObj.uri);
         } else if (doc.id === id) {
           const all = doc.data().myObj;
