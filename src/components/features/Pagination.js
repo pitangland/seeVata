@@ -55,6 +55,8 @@ export default Pagination;
 let Section = styled.div`
   display: flex;
   align-items: center;
+
+  z-index: 2;
 `;
 
 let My = styled.div`
